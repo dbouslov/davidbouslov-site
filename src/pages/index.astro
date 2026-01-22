@@ -239,33 +239,33 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
               {researchPipeline.map((item, index) => (
                 <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
-                  <!-- Circle Node -->
-                  <div
-                    class="pipeline-node relative w-16 h-16 rounded-full flex items-center justify-center border-2 cursor-pointer transition-transform duration-200 group-hover:scale-110"
-                    style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                  >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-
-                    <!-- Popover (smooth fade + scale) -->
-                    <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-48 p-4 rounded-xl border-2 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 ease-out shadow-xl"
-                      style={`background-color: rgba(15, 23, 36, 0.95); border-color: ${item.color};`}
+                  <div class="relative cursor-pointer">
+                    <!-- Circle with number (fades out on hover) -->
+                    <div
+                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110"
+                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
                     >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2" style={`color: ${item.color};`}>{item.stage}</p>
+                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+
+                    <!-- Expanded content (blooms from center on hover) -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl"
+                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
                       <ul class="space-y-1.5">
                         {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-200 flex items-start gap-1.5">
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
                             <span style={`color: ${item.color};`} class="mt-0.5">•</span>
                             <span>{project}</span>
                           </li>
                         ))}
                       </ul>
-                      <!-- Arrow pointing up -->
-                      <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-l-2 border-t-2"
-                        style={`background-color: rgba(15, 23, 36, 0.95); border-color: ${item.color};`}></div>
                     </div>
                   </div>
-                  <!-- Label -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
+                  <!-- Label (fades on hover) -->
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
                 </div>
               ))}
             </div>
@@ -292,33 +292,33 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
             <div class="grid grid-cols-3 gap-4 md:gap-0 max-w-2xl mx-auto">
               {projectPipeline.map((item, index) => (
                 <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
-                  <!-- Circle Node -->
-                  <div
-                    class="pipeline-node relative w-16 h-16 rounded-full flex items-center justify-center border-2 cursor-pointer transition-transform duration-200 group-hover:scale-110"
-                    style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                  >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-
-                    <!-- Popover (smooth fade + scale) -->
-                    <div class="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-44 p-4 rounded-xl border-2 opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 ease-out shadow-xl"
-                      style={`background-color: rgba(15, 23, 36, 0.95); border-color: ${item.color};`}
+                  <div class="relative cursor-pointer">
+                    <!-- Circle with number (fades out on hover) -->
+                    <div
+                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110"
+                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
                     >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2" style={`color: ${item.color};`}>{item.stage}</p>
+                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+
+                    <!-- Expanded content (blooms from center on hover) -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl"
+                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
                       <ul class="space-y-1.5">
                         {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-200 flex items-start gap-1.5">
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
                             <span style={`color: ${item.color};`} class="mt-0.5">•</span>
                             <span>{project}</span>
                           </li>
                         ))}
                       </ul>
-                      <!-- Arrow pointing up -->
-                      <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 border-l-2 border-t-2"
-                        style={`background-color: rgba(15, 23, 36, 0.95); border-color: ${item.color};`}></div>
                     </div>
                   </div>
-                  <!-- Label -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
+                  <!-- Label (fades on hover) -->
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
                 </div>
               ))}
             </div>
