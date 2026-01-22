@@ -211,31 +211,30 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
             <!-- Stages -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
               {researchPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group">
-                  <!-- Node -->
+                <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
+                  <!-- Expanding Node -->
                   <div
-                    class="pipeline-node w-16 h-16 rounded-full flex items-center justify-center z-10 transition-all duration-300 border-2 cursor-pointer hover:scale-125"
+                    class="pipeline-node relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 border-2 cursor-pointer group-hover:w-52 group-hover:h-auto group-hover:rounded-2xl group-hover:py-4 group-hover:px-4"
                     style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    data-projects={JSON.stringify(item.projects)}
-                    data-stage={item.stage}
                   >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    <!-- Number (hides on hover) -->
+                    <span class="text-2xl font-bold transition-opacity duration-200 group-hover:opacity-0 group-hover:absolute" style={`color: ${item.color};`}>{item.count}</span>
+
+                    <!-- Expanded content (shows on hover) -->
+                    <div class="hidden group-hover:block w-full">
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-200 flex items-start gap-1.5">
+                            <span class="text-grayblue-500 mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                   <!-- Label -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
-
-                  <!-- Hover Modal -->
-                  <div class="pipeline-modal absolute left-1/2 -translate-x-1/2 top-20 mt-2 w-56 p-3 rounded-lg bg-grayblue-800 border border-grayblue-700/50 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <p class="text-xs font-semibold text-grayblue-300 uppercase tracking-wider mb-2">{item.stage}</p>
-                    <ul class="space-y-1.5">
-                      {item.projects.map((project) => (
-                        <li class="text-sm text-grayblue-200 flex items-start gap-2">
-                          <span class="text-grayblue-500 mt-1">•</span>
-                          <span>{project}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium group-hover:opacity-0 transition-opacity">{item.stage}</span>
                 </div>
               ))}
             </div>
@@ -261,31 +260,30 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
             <!-- Stages -->
             <div class="grid grid-cols-3 gap-4 md:gap-0 max-w-2xl mx-auto">
               {projectPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group">
-                  <!-- Node -->
+                <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
+                  <!-- Expanding Node -->
                   <div
-                    class="pipeline-node w-16 h-16 rounded-full flex items-center justify-center z-10 transition-all duration-300 border-2 cursor-pointer hover:scale-125"
+                    class="pipeline-node relative w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 border-2 cursor-pointer group-hover:w-48 group-hover:h-auto group-hover:rounded-2xl group-hover:py-4 group-hover:px-4"
                     style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    data-projects={JSON.stringify(item.projects)}
-                    data-stage={item.stage}
                   >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    <!-- Number (hides on hover) -->
+                    <span class="text-2xl font-bold transition-opacity duration-200 group-hover:opacity-0 group-hover:absolute" style={`color: ${item.color};`}>{item.count}</span>
+
+                    <!-- Expanded content (shows on hover) -->
+                    <div class="hidden group-hover:block w-full">
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-200 flex items-start gap-1.5">
+                            <span class="text-grayblue-500 mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                   <!-- Label -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
-
-                  <!-- Hover Modal -->
-                  <div class="pipeline-modal absolute left-1/2 -translate-x-1/2 top-20 mt-2 w-56 p-3 rounded-lg bg-grayblue-800 border border-grayblue-700/50 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <p class="text-xs font-semibold text-grayblue-300 uppercase tracking-wider mb-2">{item.stage}</p>
-                    <ul class="space-y-1.5">
-                      {item.projects.map((project) => (
-                        <li class="text-sm text-grayblue-200 flex items-start gap-2">
-                          <span class="text-grayblue-500 mt-1">•</span>
-                          <span>{project}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium group-hover:opacity-0 transition-opacity">{item.stage}</span>
                 </div>
               ))}
             </div>
@@ -373,13 +371,3 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
   </main>
 </Layout>
 
-<style>
-  /* Ensure pipeline modals don't get cut off */
-  .pipeline-modal {
-    pointer-events: none;
-  }
-
-  .group:hover .pipeline-modal {
-    pointer-events: auto;
-  }
-</style>
