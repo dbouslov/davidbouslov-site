@@ -7,51 +7,73 @@ import ResearchCard from '../components/ResearchCard.astro';
 const projects = [
   {
     title: "Teamwise",
-    description: "AI-powered discharge decision support tool for hospitalists. Analyzes patient data to predict readmission risk and optimize discharge timing.",
-    tags: ["Healthcare AI", "Clinical Decision Support", "Python"],
+    description: "Discharge decision support tool for hospitalists. Presenting to HMH Innovation team Feb 2026.",
+    tags: ["Healthcare AI", "Clinical Decision Support"],
     icon: "🏥",
   },
   {
     title: "AutoEdit",
-    description: "Automated content creation pipeline. From raw recordings to polished, multi-platform video content with AI-driven editing.",
-    tags: ["Content Automation", "AI", "Video Processing"],
+    description: "One-button content creation pipeline. Records camera, screen, and audio, then auto-edits into polished video.",
+    tags: ["FFmpeg", "Python", "Automation"],
     icon: "🎬",
   },
   {
-    title: "Gap Analysis System",
-    description: "Anki-based study optimization tool. Maps UWorld performance to flashcards, identifying knowledge gaps for targeted shelf exam prep.",
+    title: "Gap Analysis",
+    description: "Anki-based study optimization. Maps UWorld incorrects to flashcards, identifying knowledge gaps for targeted board prep.",
     tags: ["Education Tech", "Spaced Repetition", "Python"],
     icon: "📊",
   },
   {
-    title: "Daily Planner",
-    description: "AI-powered personal productivity system. Natural language task management, Anki integration, and automated scheduling.",
-    tags: ["Productivity", "Claude AI", "Automation"],
-    icon: "📅",
+    title: "CEA Templates",
+    description: "Reusable R frameworks for Markov model cost-effectiveness analyses. Built for rapid health economics research.",
+    tags: ["R", "Health Economics", "Markov Models"],
+    icon: "💰",
   },
 ];
 
-const research = [
+// Publications - actually published
+const publications = [
   {
-    title: "Cost-Effectiveness of Parathyroid Allotransplantation vs. Lifelong Calcium Supplementation",
-    venue: "Manuscript in preparation",
-    year: "2026",
-    type: "ongoing" as const,
+    title: "An Early Pipeline Framework for Assessing Vendor AI Solutions to Support Return on Investment",
+    venue: "NPJ Digital Medicine",
+    year: "2025",
+    type: "publication" as const,
     coauthors: "Bouslov D, et al.",
   },
   {
-    title: "Cost-Effectiveness of Bariatric Surgery vs. GLP-1 Receptor Agonists for Obesity Management",
+    title: "Glucagon and Insulin Cross Talk Regulates Hepatic Glycogen Metabolism",
+    venue: "Diabetes",
+    year: "2024",
+    type: "publication" as const,
+  },
+  {
+    title: "β Cell Gαs Signaling and Glucose Homeostasis",
+    venue: "Journal of Clinical Investigation",
+    year: "2025",
+    type: "publication" as const,
+  },
+];
+
+// Current research - in progress
+const currentResearch = [
+  {
+    title: "Cost-Effectiveness of Bariatric Surgery vs. GLP-1 Receptor Agonists",
     venue: "Manuscript in preparation",
     year: "2026",
     type: "ongoing" as const,
-    coauthors: "Bouslov D, et al.",
+    coauthors: "Markov model complete - surgery dominates with 3.1 more QALYs",
   },
   {
-    title: "AI Anthropomorphization in Medical Literature: A Thematic Analysis",
-    venue: "Under review",
+    title: "AI Anthropomorphization in Medical Literature",
+    venue: "Thematic analysis with Dr. Fridman",
     year: "2026",
     type: "ongoing" as const,
-    coauthors: "Bouslov D, Fridman I, et al.",
+  },
+  {
+    title: "Eliciting Patient Perspectives on AI in Healthcare",
+    venue: "Manuscript draft stage",
+    year: "2026",
+    type: "ongoing" as const,
   },
 ];
 ---
@@ -85,7 +107,7 @@ const research = [
           Medical Student · Researcher · Builder
         </p>
         <p class="mt-4 text-grayblue-500 max-w-lg mx-auto">
-          Building at the intersection of medicine, AI, and technology.
+          Building at the intersection of medicine, AI, and health economics.
           M2 at Hackensack Meridian School of Medicine.
         </p>
         <div class="mt-8 flex items-center justify-center gap-4">
@@ -96,7 +118,7 @@ const research = [
             View Projects
           </a>
           <a
-            href="https://github.com/davidbouslov"
+            href="https://github.com/dbouslov"
             target="_blank"
             rel="noopener noreferrer"
             class="px-6 py-3 border border-grayblue-600 hover:border-grayblue-400 text-grayblue-300 hover:text-grayblue-100 rounded-lg font-medium transition-colors"
@@ -121,16 +143,16 @@ const research = [
         <div class="grid md:grid-cols-2 gap-8">
           <div class="space-y-4 text-grayblue-300 leading-relaxed">
             <p>
-              I'm a second-year medical student at Hackensack Meridian School of Medicine,
-              passionate about leveraging technology to improve healthcare delivery and outcomes.
+              I'm a second-year medical student at Hackensack Meridian School of Medicine
+              interested in surgery and leveraging technology to improve healthcare.
             </p>
             <p>
-              My background combines clinical medicine with software development—I build tools
-              that solve real problems I encounter in medical education and practice.
+              I build tools that solve problems I encounter in medical education and research—from
+              study optimization systems to cost-effectiveness analysis frameworks.
             </p>
             <p>
-              When I'm not in the hospital or coding, I'm researching health economics and
-              cost-effectiveness analysis, exploring how we can make healthcare more efficient and equitable.
+              My research focuses on health economics, AI governance in healthcare, and
+              understanding how physicians and patients interact with AI systems.
             </p>
           </div>
           <div class="space-y-4">
@@ -142,13 +164,13 @@ const research = [
               </div>
               <div class="mt-4 space-y-2">
                 <p class="text-grayblue-200">University of North Carolina at Chapel Hill</p>
-                <p class="text-sm text-grayblue-500">B.S. Biology & Chemistry · Phi Beta Kappa</p>
+                <p class="text-sm text-grayblue-500">B.S. Biology, Chemistry Minor · Phi Beta Kappa</p>
               </div>
             </div>
             <div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
               <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-3">Interests</h3>
               <div class="flex flex-wrap gap-2">
-                {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis", "Medical Education"].map((interest) => (
+                {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis"].map((interest) => (
                   <span class="px-3 py-1 text-sm rounded-full bg-grayblue-800/50 text-grayblue-300 border border-grayblue-700/30">
                     {interest}
                   </span>
@@ -165,7 +187,7 @@ const research = [
       <div class="max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Projects</h2>
         <p class="text-grayblue-400 mb-8">
-          Tools and systems I've built to solve problems in medicine, education, and productivity.
+          Tools I've built to solve problems in medicine, education, and productivity.
         </p>
         <div class="grid md:grid-cols-2 gap-4">
           {projects.map((project) => (
@@ -179,11 +201,19 @@ const research = [
     <section id="research" class="py-24 px-6">
       <div class="max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Research</h2>
-        <p class="text-grayblue-400 mb-8">
-          Current research projects in health economics and medical AI.
-        </p>
+
+        <!-- Publications -->
+        <h3 class="text-xl font-semibold text-grayblue-200 mb-4 mt-8">Publications</h3>
+        <div class="space-y-4 mb-12">
+          {publications.map((item) => (
+            <ResearchCard {...item} />
+          ))}
+        </div>
+
+        <!-- Current Research -->
+        <h3 class="text-xl font-semibold text-grayblue-200 mb-4">Current Research</h3>
         <div class="space-y-4">
-          {research.map((item) => (
+          {currentResearch.map((item) => (
             <ResearchCard {...item} />
           ))}
         </div>
@@ -194,10 +224,10 @@ const research = [
     <footer class="py-12 px-6 border-t border-white/[0.06]">
       <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-sm text-grayblue-500">
-          © 2026 David Bouslov. Built with Astro & Three.js.
+          © 2026 David Bouslov
         </p>
         <div class="flex items-center gap-6">
-          <a href="https://github.com/davidbouslov" target="_blank" rel="noopener noreferrer" class="text-grayblue-500 hover:text-grayblue-300 transition-colors">
+          <a href="https://github.com/dbouslov" target="_blank" rel="noopener noreferrer" class="text-grayblue-500 hover:text-grayblue-300 transition-colors">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           </a>
           <a href="https://linkedin.com/in/davidbouslov" target="_blank" rel="noopener noreferrer" class="text-grayblue-500 hover:text-grayblue-300 transition-colors">
