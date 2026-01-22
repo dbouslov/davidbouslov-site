@@ -1,81 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import ResearchCard from '../components/ResearchCard.astro';
 
-const projects = [
-  {
-    title: "Teamwise",
-    description: "Discharge decision support tool for hospitalists. Presenting to HMH Innovation team Feb 2026.",
-    tags: ["Healthcare AI", "Clinical Decision Support"],
-    icon: "🏥",
-  },
-  {
-    title: "AutoEdit",
-    description: "One-button content creation pipeline. Records camera, screen, and audio, then auto-edits into polished video.",
-    tags: ["FFmpeg", "Python", "Automation"],
-    icon: "🎬",
-  },
-  {
-    title: "Gap Analysis",
-    description: "Anki-based study optimization. Maps UWorld incorrects to flashcards, identifying knowledge gaps for targeted board prep.",
-    tags: ["Education Tech", "Spaced Repetition", "Python"],
-    icon: "📊",
-  },
-  {
-    title: "CEA Templates",
-    description: "Reusable R frameworks for Markov model cost-effectiveness analyses. Built for rapid health economics research.",
-    tags: ["R", "Health Economics", "Markov Models"],
-    icon: "💰",
-  },
-];
-
-// Publications - actually published
+// Only actual published work
 const publications = [
   {
     title: "An Early Pipeline Framework for Assessing Vendor AI Solutions to Support Return on Investment",
     venue: "NPJ Digital Medicine",
     year: "2025",
-    type: "publication" as const,
-    coauthors: "Bouslov D, et al.",
   },
   {
     title: "Glucagon and Insulin Cross Talk Regulates Hepatic Glycogen Metabolism",
     venue: "Diabetes",
     year: "2024",
-    type: "publication" as const,
   },
   {
     title: "β Cell Gαs Signaling and Glucose Homeostasis",
     venue: "Journal of Clinical Investigation",
     year: "2025",
-    type: "publication" as const,
   },
 ];
 
-// Current research - in progress
-const currentResearch = [
-  {
-    title: "Cost-Effectiveness of Bariatric Surgery vs. GLP-1 Receptor Agonists",
-    venue: "Manuscript in preparation",
-    year: "2026",
-    type: "ongoing" as const,
-    coauthors: "Markov model complete - surgery dominates with 3.1 more QALYs",
-  },
-  {
-    title: "AI Anthropomorphization in Medical Literature",
-    venue: "Thematic analysis with Dr. Fridman",
-    year: "2026",
-    type: "ongoing" as const,
-  },
-  {
-    title: "Eliciting Patient Perspectives on AI in Healthcare",
-    venue: "Manuscript draft stage",
-    year: "2026",
-    type: "ongoing" as const,
-  },
-];
+// Theme tags for research (general areas, no specifics)
+const researchThemes = ["Health Economics", "AI Governance", "Cost-Effectiveness", "Clinical AI"];
+
+// Theme tags for projects (general areas, no specifics)
+const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data Analysis"];
 ---
 
 <Layout title="David Bouslov">
@@ -89,8 +39,8 @@ const currentResearch = [
       </a>
       <div class="flex items-center gap-6 text-sm">
         <a href="#about" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">About</a>
-        <a href="#projects" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Projects</a>
-        <a href="#research" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Research</a>
+        <a href="#work" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Work</a>
+        <a href="#publications" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Publications</a>
       </div>
     </div>
   </nav>
@@ -108,14 +58,13 @@ const currentResearch = [
         </p>
         <p class="mt-4 text-grayblue-500 max-w-lg mx-auto">
           Building at the intersection of medicine, AI, and health economics.
-          M2 at Hackensack Meridian School of Medicine.
         </p>
         <div class="mt-8 flex items-center justify-center gap-4">
           <a
-            href="#projects"
+            href="#work"
             class="px-6 py-3 bg-grayblue-600 hover:bg-grayblue-500 text-white rounded-lg font-medium transition-colors"
           >
-            View Projects
+            View Work
           </a>
           <a
             href="https://github.com/dbouslov"
@@ -150,10 +99,6 @@ const currentResearch = [
               I build tools that solve problems I encounter in medical education and research—from
               study optimization systems to cost-effectiveness analysis frameworks.
             </p>
-            <p>
-              My research focuses on health economics, AI governance in healthcare, and
-              understanding how physicians and patients interact with AI systems.
-            </p>
           </div>
           <div class="space-y-4">
             <div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
@@ -167,54 +112,86 @@ const currentResearch = [
                 <p class="text-sm text-grayblue-500">B.S. Biology, Chemistry Minor · Phi Beta Kappa</p>
               </div>
             </div>
-            <div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-              <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-3">Interests</h3>
-              <div class="flex flex-wrap gap-2">
-                {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis"].map((interest) => (
-                  <span class="px-3 py-1 text-sm rounded-full bg-grayblue-800/50 text-grayblue-300 border border-grayblue-700/30">
-                    {interest}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-24 px-6 bg-white/[0.01]">
+    <!-- Work Section - Visual Stats -->
+    <section id="work" class="py-24 px-6 bg-white/[0.01]">
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Projects</h2>
-        <p class="text-grayblue-400 mb-8">
-          Tools I've built to solve problems in medicine, education, and productivity.
-        </p>
-        <div class="grid md:grid-cols-2 gap-4">
-          {projects.map((project) => (
-            <ProjectCard {...project} />
-          ))}
+        <h2 class="text-3xl font-bold text-grayblue-100 mb-12">Work</h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Research Card -->
+          <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30 hover:border-grayblue-600/50 transition-all duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-xl bg-grayblue-600/20 flex items-center justify-center">
+                <span class="text-3xl font-bold text-grayblue-400">5+</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-grayblue-100">Research Projects</h3>
+                <p class="text-sm text-grayblue-500">Active investigations</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {researchThemes.map((theme) => (
+                <span class="px-3 py-1.5 text-sm rounded-full bg-grayblue-700/40 text-grayblue-300 border border-grayblue-600/30">
+                  {theme}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Projects Card -->
+          <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30 hover:border-grayblue-600/50 transition-all duration-300">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-xl bg-grayblue-600/20 flex items-center justify-center">
+                <span class="text-3xl font-bold text-grayblue-400">4+</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-grayblue-100">Side Projects</h3>
+                <p class="text-sm text-grayblue-500">Tools & applications</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {projectThemes.map((theme) => (
+                <span class="px-3 py-1.5 text-sm rounded-full bg-grayblue-700/40 text-grayblue-300 border border-grayblue-600/30">
+                  {theme}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Interests Bar -->
+        <div class="mt-12 p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Areas of Interest</h3>
+          <div class="flex flex-wrap gap-3">
+            {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis", "Clinical Decision Support"].map((interest) => (
+              <span class="px-4 py-2 text-sm rounded-lg bg-grayblue-800/30 text-grayblue-200 border border-grayblue-700/20 hover:border-grayblue-600/40 transition-colors">
+                {interest}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Research Section -->
-    <section id="research" class="py-24 px-6">
+    <!-- Publications Section - Only Real/Published -->
+    <section id="publications" class="py-24 px-6">
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Research</h2>
+        <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Publications</h2>
+        <p class="text-grayblue-400 mb-8">Peer-reviewed work</p>
 
-        <!-- Publications -->
-        <h3 class="text-xl font-semibold text-grayblue-200 mb-4 mt-8">Publications</h3>
-        <div class="space-y-4 mb-12">
-          {publications.map((item) => (
-            <ResearchCard {...item} />
-          ))}
-        </div>
-
-        <!-- Current Research -->
-        <h3 class="text-xl font-semibold text-grayblue-200 mb-4">Current Research</h3>
         <div class="space-y-4">
-          {currentResearch.map((item) => (
-            <ResearchCard {...item} />
+          {publications.map((pub) => (
+            <div class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300">
+              <h4 class="text-base font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
+              <p class="mt-2 text-sm text-grayblue-400">
+                <span class="text-grayblue-300">{pub.venue}</span> · {pub.year}
+              </p>
+            </div>
           ))}
         </div>
       </div>
