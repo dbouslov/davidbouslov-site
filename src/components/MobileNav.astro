@@ -1,0 +1,61 @@
+---
+// MobileNav.astro - Mobile navigation toggle and command palette hint
+---
+
+<script is:inline>
+(function() {
+  function initMobileNav() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const cmdKHint = document.getElementById('cmd-k-hint');
+
+    if (menuBtn && menu) {
+      let isOpen = false;
+
+      menuBtn.addEventListener('click', function() {
+        isOpen = !isOpen;
+        menu.classList.toggle('hidden', !isOpen);
+
+        // Update button icon
+        const icon = menuBtn.querySelector('svg');
+        if (isOpen) {
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        } else {
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+        }
+      });
+
+      // Close menu when clicking a link
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          isOpen = false;
+          menu.classList.add('hidden');
+          const icon = menuBtn.querySelector('svg');
+          icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+        });
+      });
+    }
+
+    // Command palette hint - trigger command palette on click
+    if (cmdKHint) {
+      cmdKHint.addEventListener('click', function() {
+        // Trigger the command palette (simulate Cmd+K)
+        const event = new KeyboardEvent('keydown', {
+          key: 'k',
+          metaKey: true,
+          bubbles: true
+        });
+        document.dispatchEvent(event);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNav);
+  } else {
+    initMobileNav();
+  }
+
+  document.addEventListener('astro:page-load', initMobileNav);
+})();
+</script>

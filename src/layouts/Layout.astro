@@ -7,6 +7,7 @@ import CursorTrail from '../components/CursorTrail.astro';
 import MagneticElements from '../components/MagneticElements.astro';
 import TiltCards from '../components/TiltCards.astro';
 import CopyEmail from '../components/CopyEmail.astro';
+import MobileNav from '../components/MobileNav.astro';
 
 interface Props {
   title: string;
@@ -19,14 +20,43 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="David Bouslov - Medical Student, Researcher, Builder" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content="Medical student at Hackensack Meridian, building at the intersection of medicine, AI, and health economics. Researcher and software developer." />
+    <meta name="author" content="David Bouslov" />
+    <meta name="keywords" content="David Bouslov, medical student, health economics, AI in healthcare, cost-effectiveness analysis, medical research" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://davidbouslov.com/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content="Medical student at Hackensack Meridian, building at the intersection of medicine, AI, and health economics." />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://davidbouslov.com/" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content="Medical student at Hackensack Meridian, building at the intersection of medicine, AI, and health economics." />
+    <meta property="twitter:image" content="/og-image.png" />
+    <meta name="twitter:creator" content="@davidbouslov" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f1724" />
+
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
   </head>
   <body class="antialiased">
     <CursorTrail />
@@ -37,5 +67,6 @@ const { title } = Astro.props;
     <MagneticElements />
     <TiltCards />
     <CopyEmail />
+    <MobileNav />
   </body>
 </html>
