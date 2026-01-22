@@ -1,0 +1,126 @@
+---
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+  highlight?: boolean;
+}
+
+interface Props {
+  items?: TimelineItem[];
+}
+
+const defaultItems: TimelineItem[] = [
+  {
+    year: "2019-2023",
+    title: "University of North Carolina at Chapel Hill",
+    description: "B.S. Biology, Chemistry Minor, Phi Beta Kappa",
+  },
+  {
+    year: "2023-2027",
+    title: "Hackensack Meridian School of Medicine",
+    description: "M.D. Candidate",
+  },
+  {
+    year: "2024",
+    title: "Published in Diabetes",
+    description: "Glucagon and Insulin Cross Talk Regulates Hepatic Glycogen Metabolism",
+    highlight: true,
+  },
+  {
+    year: "2025",
+    title: "Published in NPJ Digital Medicine & JCI",
+    description: "AI pipeline framework for ROI assessment; Beta cell signaling research",
+    highlight: true,
+  },
+];
+
+const { items = defaultItems } = Astro.props;
+---
+
+<div class="timeline-container">
+  <div class="relative">
+    {items.map((item, index) => (
+      <div
+        data-animate
+        data-animate-delay={Math.min(index + 1, 4)}
+        class="timeline-item group relative flex gap-6 pb-10 last:pb-0"
+      >
+        {/* Timeline line */}
+        <div class="timeline-line absolute left-[11px] top-5 bottom-0 w-0.5 bg-grayblue-700/50 last:hidden" />
+
+        {/* Node */}
+        <div class="timeline-node relative z-10 flex-shrink-0">
+          <div
+            class:list={[
+              "w-6 h-6 rounded-full border-2 transition-all duration-300",
+              "group-hover:scale-125 group-hover:border-grayblue-300",
+              item.highlight
+                ? "bg-grayblue-500/30 border-grayblue-400"
+                : "bg-grayblue-700/30 border-grayblue-500",
+            ]}
+          >
+            <div
+              class:list={[
+                "absolute inset-1 rounded-full transition-all duration-300",
+                "group-hover:bg-grayblue-400",
+                item.highlight ? "bg-grayblue-400" : "bg-grayblue-500",
+              ]}
+            />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div class="flex-1 -mt-1">
+          {/* Year badge */}
+          <span
+            class:list={[
+              "inline-block px-3 py-1 text-xs font-semibold rounded-full mb-2 transition-colors duration-300",
+              "border",
+              item.highlight
+                ? "bg-grayblue-600/20 text-grayblue-200 border-grayblue-500/30 group-hover:border-grayblue-400/50"
+                : "bg-grayblue-800/30 text-grayblue-400 border-grayblue-700/30 group-hover:border-grayblue-600/50",
+            ]}
+          >
+            {item.year}
+          </span>
+
+          {/* Card */}
+          <div
+            class:list={[
+              "p-4 rounded-lg transition-all duration-300",
+              "bg-white/[0.02] border border-white/[0.05]",
+              "group-hover:bg-white/[0.04] group-hover:border-grayblue-600/30",
+              "group-hover:translate-x-1",
+            ]}
+          >
+            <h4 class="text-grayblue-100 font-medium group-hover:text-grayblue-50 transition-colors">
+              {item.title}
+            </h4>
+            <p class="mt-1 text-sm text-grayblue-400 group-hover:text-grayblue-300 transition-colors">
+              {item.description}
+            </p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* Hide the line on the last item */
+  .timeline-item:last-child .timeline-line {
+    display: none;
+  }
+
+  /* Mobile responsiveness - stack nicely */
+  @media (max-width: 480px) {
+    .timeline-item {
+      gap: 1rem;
+    }
+
+    .timeline-node {
+      margin-top: 0.25rem;
+    }
+  }
+</style>

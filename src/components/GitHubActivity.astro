@@ -1,0 +1,150 @@
+---
+// GitHubActivity.astro
+// A decorative GitHub-style contribution graph using seeded randomness
+
+interface Props {
+  seed?: number;
+  rows?: number;
+  cols?: number;
+}
+
+const { seed = 42, rows = 7, cols = 15 } = Astro.props;
+
+// Simple seeded random number generator (mulberry32)
+function createSeededRandom(seed: number) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+const random = createSeededRandom(seed);
+
+// Activity levels: 0 = empty, 1 = low, 2 = medium, 3 = high, 4 = very high
+function generateActivityLevel(dayOfWeek: number): number {
+  const r = random();
+
+  // Weekdays (Mon-Fri: indices 1-5) have more activity
+  const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+
+  if (isWeekday) {
+    // Weekday: higher chance of activity
+    if (r < 0.15) return 0;      // 15% empty
+    if (r < 0.35) return 1;      // 20% low
+    if (r < 0.60) return 2;      // 25% medium
+    if (r < 0.85) return 3;      // 25% high
+    return 4;                     // 15% very high
+  } else {
+    // Weekend: lower chance of activity
+    if (r < 0.45) return 0;      // 45% empty
+    if (r < 0.70) return 1;      // 25% low
+    if (r < 0.85) return 2;      // 15% medium
+    if (r < 0.95) return 3;      // 10% high
+    return 4;                     // 5% very high
+  }
+}
+
+// Generate the grid data
+const grid: { level: number; contributions: number }[][] = [];
+
+for (let col = 0; col < cols; col++) {
+  const week: { level: number; contributions: number }[] = [];
+  for (let row = 0; row < rows; row++) {
+    const level = generateActivityLevel(row);
+    // Generate a believable contribution count based on level
+    const baseContributions = [0, 2, 5, 9, 14];
+    const variance = level > 0 ? Math.floor(random() * 3) : 0;
+    const contributions = baseContributions[level] + variance;
+    week.push({ level, contributions });
+  }
+  grid.push(week);
+}
+
+// Day labels (Sunday through Saturday)
+const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+---
+
+<div class="github-activity">
+  <div class="flex items-end gap-1">
+    <!-- Day labels -->
+    <div class="flex flex-col gap-[2px] mr-1 text-[10px] text-grayblue-500">
+      {dayLabels.map((day, i) => (
+        <div class="h-[10px] leading-[10px] w-6" style={i % 2 === 1 ? '' : 'visibility: hidden'}>
+          {day}
+        </div>
+      ))}
+    </div>
+
+    <!-- Grid -->
+    <div class="flex gap-[2px]">
+      {grid.map((week, weekIndex) => (
+        <div class="flex flex-col gap-[2px]">
+          {week.map((day, dayIndex) => (
+            <div
+              class:list={[
+                'activity-square w-[10px] h-[10px] rounded-[2px] cursor-pointer transition-all duration-200 hover:ring-1 hover:ring-grayblue-400/50',
+                {
+                  'bg-grayblue-900/30': day.level === 0,
+                  'bg-grayblue-700': day.level === 1,
+                  'bg-grayblue-600': day.level === 2,
+                  'bg-grayblue-500': day.level === 3,
+                  'bg-grayblue-400': day.level === 4,
+                }
+              ]}
+              data-contributions={day.contributions}
+              data-week={weekIndex}
+              data-day={dayIndex}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="flex items-center gap-2 mt-3 text-[10px] text-grayblue-500">
+    <span>Less</span>
+    <div class="flex gap-[2px]">
+      <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-900/30"></div>
+      <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-700"></div>
+      <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-600"></div>
+      <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-500"></div>
+      <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-400"></div>
+    </div>
+    <span>More</span>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="activity-tooltip" class="fixed pointer-events-none opacity-0 transition-opacity duration-150 px-2 py-1 text-xs bg-grayblue-800 text-grayblue-100 rounded shadow-lg border border-grayblue-700/50 z-50">
+    0 contributions
+  </div>
+</div>
+
+<script>
+  const squares = document.querySelectorAll('.activity-square');
+  const tooltip = document.getElementById('activity-tooltip');
+
+  if (tooltip) {
+    squares.forEach((square) => {
+      square.addEventListener('mouseenter', (e) => {
+        const target = e.target as HTMLElement;
+        const contributions = target.dataset.contributions || '0';
+        const text = contributions === '1' ? '1 contribution' : `${contributions} contributions`;
+        tooltip.textContent = text;
+        tooltip.style.opacity = '1';
+      });
+
+      square.addEventListener('mousemove', (e) => {
+        const mouseEvent = e as MouseEvent;
+        tooltip.style.left = `${mouseEvent.clientX + 10}px`;
+        tooltip.style.top = `${mouseEvent.clientY - 30}px`;
+      });
+
+      square.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+      });
+    });
+  }
+</script>
