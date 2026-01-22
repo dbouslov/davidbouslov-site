@@ -21,10 +21,23 @@ const publications = [
   },
 ];
 
-// Theme tags for research (general areas, no specifics)
-const researchThemes = ["Health Economics", "AI Governance", "Cost-Effectiveness", "Clinical AI"];
+// Research pipeline stages (using hex colors for inline styles)
+const researchPipeline = [
+  { stage: "Planning", count: 2, color: "#486581", bg: "rgba(72, 101, 129, 0.2)" },
+  { stage: "In Progress", count: 3, color: "#627d98", bg: "rgba(98, 125, 152, 0.2)" },
+  { stage: "Under Review", count: 1, color: "#829ab1", bg: "rgba(130, 154, 177, 0.2)" },
+  { stage: "Published", count: 3, color: "#9fb3c8", bg: "rgba(159, 179, 200, 0.2)" },
+];
 
-// Theme tags for projects (general areas, no specifics)
+// Project pipeline stages
+const projectPipeline = [
+  { stage: "Concept", count: 2, color: "#486581", bg: "rgba(72, 101, 129, 0.2)" },
+  { stage: "Building", count: 3, color: "#627d98", bg: "rgba(98, 125, 152, 0.2)" },
+  { stage: "Live", count: 2, color: "#829ab1", bg: "rgba(130, 154, 177, 0.2)" },
+];
+
+// Theme tags
+const researchThemes = ["Health Economics", "AI Governance", "Cost-Effectiveness", "Clinical AI"];
 const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data Analysis"];
 ---
 
@@ -117,55 +130,84 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
       </div>
     </section>
 
-    <!-- Work Section - Visual Stats -->
+    <!-- Work Section - Pipeline Visualization -->
     <section id="work" class="py-24 px-6 bg-white/[0.01]">
       <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold text-grayblue-100 mb-12">Work</h2>
+        <h2 class="text-3xl font-bold text-grayblue-100 mb-4">Work</h2>
+        <p class="text-grayblue-400 mb-12">Current pipeline across research and development</p>
 
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Research Card -->
-          <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30 hover:border-grayblue-600/50 transition-all duration-300">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-xl bg-grayblue-600/20 flex items-center justify-center">
-                <span class="text-3xl font-bold text-grayblue-400">5+</span>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-grayblue-100">Research Projects</h3>
-                <p class="text-sm text-grayblue-500">Active investigations</p>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              {researchThemes.map((theme) => (
-                <span class="px-3 py-1.5 text-sm rounded-full bg-grayblue-700/40 text-grayblue-300 border border-grayblue-600/30">
-                  {theme}
-                </span>
+        <!-- Research Pipeline -->
+        <div class="mb-12 p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
+          <h3 class="text-lg font-semibold text-grayblue-100 mb-2">Research</h3>
+          <div class="flex flex-wrap gap-2 mb-8">
+            {researchThemes.map((theme) => (
+              <span class="px-2 py-1 text-xs rounded-full bg-grayblue-700/40 text-grayblue-400 border border-grayblue-600/20">
+                {theme}
+              </span>
+            ))}
+          </div>
+
+          <!-- Pipeline Visual -->
+          <div class="relative">
+            <!-- Connection line -->
+            <div class="absolute top-8 left-8 right-8 h-0.5 bg-gradient-to-r from-grayblue-600 via-grayblue-500 to-grayblue-300 hidden md:block"></div>
+
+            <!-- Stages -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
+              {researchPipeline.map((item, index) => (
+                <div class="flex flex-col items-center relative">
+                  <!-- Node -->
+                  <div
+                    class="w-16 h-16 rounded-full flex items-center justify-center z-10 transition-transform hover:scale-110 border-2"
+                    style={`background-color: ${item.bg}; border-color: ${item.color};`}
+                  >
+                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                  </div>
+                  <!-- Label -->
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
+                </div>
               ))}
             </div>
           </div>
+        </div>
 
-          <!-- Projects Card -->
-          <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30 hover:border-grayblue-600/50 transition-all duration-300">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-16 h-16 rounded-xl bg-grayblue-600/20 flex items-center justify-center">
-                <span class="text-3xl font-bold text-grayblue-400">4+</span>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-grayblue-100">Side Projects</h3>
-                <p class="text-sm text-grayblue-500">Tools & applications</p>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              {projectThemes.map((theme) => (
-                <span class="px-3 py-1.5 text-sm rounded-full bg-grayblue-700/40 text-grayblue-300 border border-grayblue-600/30">
-                  {theme}
-                </span>
+        <!-- Projects Pipeline -->
+        <div class="mb-12 p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
+          <h3 class="text-lg font-semibold text-grayblue-100 mb-2">Projects</h3>
+          <div class="flex flex-wrap gap-2 mb-8">
+            {projectThemes.map((theme) => (
+              <span class="px-2 py-1 text-xs rounded-full bg-grayblue-700/40 text-grayblue-400 border border-grayblue-600/20">
+                {theme}
+              </span>
+            ))}
+          </div>
+
+          <!-- Pipeline Visual -->
+          <div class="relative">
+            <!-- Connection line -->
+            <div class="absolute top-8 left-12 right-12 h-0.5 bg-gradient-to-r from-grayblue-600 via-grayblue-500 to-grayblue-400 hidden md:block"></div>
+
+            <!-- Stages -->
+            <div class="grid grid-cols-3 gap-4 md:gap-0 max-w-2xl mx-auto">
+              {projectPipeline.map((item, index) => (
+                <div class="flex flex-col items-center relative">
+                  <!-- Node -->
+                  <div
+                    class="w-16 h-16 rounded-full flex items-center justify-center z-10 transition-transform hover:scale-110 border-2"
+                    style={`background-color: ${item.bg}; border-color: ${item.color};`}
+                  >
+                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                  </div>
+                  <!-- Label -->
+                  <span class="mt-3 text-sm text-grayblue-300 font-medium">{item.stage}</span>
+                </div>
               ))}
             </div>
           </div>
         </div>
 
         <!-- Interests Bar -->
-        <div class="mt-12 p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+        <div class="p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
           <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Areas of Interest</h3>
           <div class="flex flex-wrap gap-3">
             {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis", "Clinical Decision Support"].map((interest) => (
