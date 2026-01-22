@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ParticleBackground from '../components/ParticleBackground.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<Layout title="404 | David Bouslov">
+  <ParticleBackground />
+  <Navigation />
+
+  <main id="main-content" class="relative z-10 min-h-screen flex items-center justify-center px-6">
+    <div class="text-center max-w-lg">
+      <!-- 404 Number -->
+      <div data-animate class="mb-8">
+        <span class="text-8xl md:text-9xl font-bold text-grayblue-800/50">404</span>
+      </div>
+
+      <!-- Message -->
+      <h1 data-animate data-animate-delay="1" class="text-2xl md:text-3xl font-semibold text-grayblue-100 mb-4">
+        Page not found
+      </h1>
+      <p data-animate data-animate-delay="2" class="text-grayblue-400 mb-8">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+
+      <!-- Actions -->
+      <div data-animate data-animate-delay="3" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/"
+          class="px-6 py-3 rounded-lg bg-grayblue-700/50 text-grayblue-100 hover:bg-grayblue-600/50 transition-colors font-medium"
+        >
+          Go home
+        </a>
+        <button
+          id="open-search"
+          class="px-6 py-3 rounded-lg border border-grayblue-700/50 text-grayblue-300 hover:border-grayblue-600/50 hover:text-grayblue-100 transition-all font-medium flex items-center gap-2"
+        >
+          <span>Search</span>
+          <kbd class="px-1.5 py-0.5 text-xs rounded bg-grayblue-800/50 border border-grayblue-700/50">⌘K</kbd>
+        </button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Open command palette on button click
+  document.getElementById('open-search')?.addEventListener('click', () => {
+    const event = new KeyboardEvent('keydown', {
+      key: 'k',
+      metaKey: true,
+      bubbles: true
+    });
+    document.dispatchEvent(event);
+  });
+</script>

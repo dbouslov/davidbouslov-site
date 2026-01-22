@@ -5,18 +5,27 @@
 
 interface NavItem {
   label: string;
-  href: string;
+  href?: string;
+  action?: string;
   description?: string;
+  icon?: 'page' | 'external' | 'copy';
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/", description: "Go to homepage" },
-  { label: "About", href: "/#about", description: "Learn about me" },
-  { label: "Work", href: "/#work", description: "View my work pipeline" },
-  { label: "Publications", href: "/#publications", description: "Peer-reviewed research" },
-  { label: "Now", href: "/now", description: "What I'm currently focused on" },
-  { label: "Uses", href: "/uses", description: "Tools and equipment I use" },
-  { label: "Projects", href: "/projects", description: "View all projects" },
+  { label: "Home", href: "/", description: "Go to homepage", icon: "page" },
+  { label: "About", href: "/#about", description: "Learn about me", icon: "page" },
+  { label: "Work", href: "/#work", description: "View my work pipeline", icon: "page" },
+  { label: "Publications", href: "/#publications", description: "Peer-reviewed research", icon: "page" },
+  { label: "Now", href: "/now", description: "What I'm currently focused on", icon: "page" },
+  { label: "Uses", href: "/uses", description: "Tools and equipment I use", icon: "page" },
+  { label: "Projects", href: "/projects", description: "View all projects", icon: "page" },
+];
+
+const actionItems: NavItem[] = [
+  { label: "Copy Email", action: "copy-email", description: "david@bouslov.com", icon: "copy" },
+  { label: "GitHub", href: "https://github.com/dbouslov", description: "View my repositories", icon: "external" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/davidbouslov", description: "Connect with me", icon: "external" },
+  { label: "Twitter / X", href: "https://twitter.com/davidbouslov", description: "Follow for updates", icon: "external" },
 ];
 ---
 
@@ -48,6 +57,8 @@ const navItems: NavItem[] = [
 
       <!-- Results List -->
       <ul id="command-palette-results" class="max-h-80 overflow-y-auto py-2" role="listbox">
+        <!-- Navigation Items -->
+        <li class="px-4 py-1.5 text-xs font-medium text-grayblue-500 uppercase tracking-wider">Pages</li>
         {navItems.map((item, index) => (
           <li
             data-index={index}
@@ -60,7 +71,7 @@ const navItems: NavItem[] = [
           >
             <div class="flex items-center gap-3">
               <svg class="w-4 h-4 text-grayblue-500 group-hover:text-grayblue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
               <div>
                 <span class="text-grayblue-100 font-medium">{item.label}</span>
@@ -72,6 +83,44 @@ const navItems: NavItem[] = [
             <svg class="w-4 h-4 text-grayblue-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
             </svg>
+          </li>
+        ))}
+
+        <!-- Actions Section -->
+        <li class="px-4 py-1.5 mt-2 text-xs font-medium text-grayblue-500 uppercase tracking-wider border-t border-grayblue-700/50 pt-3">Actions</li>
+        {actionItems.map((item, index) => (
+          <li
+            data-index={navItems.length + index}
+            data-href={item.href}
+            data-action={item.action}
+            data-label={item.label.toLowerCase()}
+            data-description={item.description?.toLowerCase() || ""}
+            class="command-palette-item px-4 py-3 cursor-pointer flex items-center justify-between group"
+            role="option"
+            aria-selected="false"
+          >
+            <div class="flex items-center gap-3">
+              {item.icon === 'copy' ? (
+                <svg class="w-4 h-4 text-grayblue-500 group-hover:text-grayblue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                </svg>
+              ) : (
+                <svg class="w-4 h-4 text-grayblue-500 group-hover:text-grayblue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+              )}
+              <div>
+                <span class="text-grayblue-100 font-medium">{item.label}</span>
+                {item.description && (
+                  <span class="ml-2 text-sm text-grayblue-500">{item.description}</span>
+                )}
+              </div>
+            </div>
+            {item.icon === 'external' && (
+              <svg class="w-4 h-4 text-grayblue-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              </svg>
+            )}
           </li>
         ))}
       </ul>
@@ -184,16 +233,37 @@ const navItems: NavItem[] = [
       });
     }
 
-    // Navigate to selected item
+    // Navigate to selected item or perform action
     function navigateToSelected() {
       if (visibleItems.length === 0) return;
 
       const selectedItem = visibleItems[selectedIndex];
       const href = selectedItem?.dataset.href;
+      const action = selectedItem?.dataset.action;
+
+      if (action === 'copy-email') {
+        navigator.clipboard.writeText('david@bouslov.com').then(() => {
+          // Show feedback
+          const label = selectedItem.querySelector('.text-grayblue-100');
+          if (label) {
+            const originalText = label.textContent;
+            label.textContent = 'Copied!';
+            setTimeout(() => {
+              label.textContent = originalText;
+            }, 1500);
+          }
+        });
+        return;
+      }
 
       if (href) {
         close();
-        window.location.href = href;
+        // External links open in new tab
+        if (href.startsWith('http')) {
+          window.open(href, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.href = href;
+        }
       }
     }
 
