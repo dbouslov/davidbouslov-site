@@ -110,10 +110,6 @@ const projectPipeline = [
     projects: ["This Website", "Study Integration Tools"]
   },
 ];
-
-// Theme tags
-const researchThemes = ["Health Economics", "AI Governance", "Cost-Effectiveness", "Clinical AI"];
-const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data Analysis"];
 ---
 
 <Layout title="David Bouslov">
@@ -220,119 +216,105 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
         <p data-animate data-animate-delay="1" class="text-grayblue-400 mb-12">Current pipeline across research and development</p>
 
         <!-- Research Pipeline -->
-        <div data-animate data-animate-delay="2" class="mb-12 p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <h3 class="text-lg font-semibold text-grayblue-100 mb-2">Research</h3>
-          <div class="flex flex-wrap gap-2 mb-8">
-            {researchThemes.map((theme) => (
-              <span class="px-2 py-1 text-xs rounded-full bg-grayblue-700/40 text-grayblue-400 border border-grayblue-600/20">
-                {theme}
-              </span>
-            ))}
-          </div>
+        <div data-animate data-animate-delay="2" class="mb-16">
+          <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Research</h3>
 
-          <!-- Pipeline Visual -->
-          <div class="relative">
-            <!-- Connection line -->
-            <div class="absolute top-8 left-8 right-8 h-0.5 bg-gradient-to-r from-grayblue-600 via-grayblue-500 to-grayblue-300 hidden md:block"></div>
-
-            <!-- Stages -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0">
-              {researchPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
-                  <div class="relative cursor-pointer">
-                    <!-- Circle with number (fades out on hover) -->
-                    <div
-                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110"
-                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    >
-                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-
-                    <!-- Expanded content (blooms from center on hover) -->
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl"
-                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- Label (fades on hover) -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-                </div>
+          <!-- Pipeline -->
+          <div class="relative flex items-center justify-between max-w-3xl mx-auto">
+            <!-- Pipeline tube -->
+            <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500 hidden md:block"></div>
+            <!-- Flow arrows -->
+            <div class="absolute top-8 left-8 right-8 hidden md:flex items-center justify-between pointer-events-none" style="transform: translateY(-50%);">
+              {[1, 2, 3].map((_, i) => (
+                <svg class="w-3 h-3 text-grayblue-500 opacity-60" style={`margin-left: ${22 + i * 2}%;`} fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                </svg>
               ))}
             </div>
+
+            <!-- Nodes -->
+            {researchPipeline.map((item, index) => (
+              <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
+                <div class="relative cursor-pointer">
+                  <!-- Circle node -->
+                  <div
+                    class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
+                    style={`border-color: ${item.color};`}
+                  >
+                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                  </div>
+
+                  <!-- Expanded content -->
+                  <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
+                    style={`border-color: ${item.color};`}
+                  >
+                    <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                    <ul class="space-y-1.5">
+                      {item.projects.map((project) => (
+                        <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                          <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                          <span>{project}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <!-- Label -->
+                <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
+              </div>
+            ))}
           </div>
         </div>
 
         <!-- Projects Pipeline -->
-        <div data-animate data-animate-delay="3" class="mb-12 p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <h3 class="text-lg font-semibold text-grayblue-100 mb-2">Projects</h3>
-          <div class="flex flex-wrap gap-2 mb-8">
-            {projectThemes.map((theme) => (
-              <span class="px-2 py-1 text-xs rounded-full bg-grayblue-700/40 text-grayblue-400 border border-grayblue-600/20">
-                {theme}
-              </span>
-            ))}
-          </div>
+        <div data-animate data-animate-delay="3">
+          <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Projects</h3>
 
-          <!-- Pipeline Visual -->
-          <div class="relative">
-            <!-- Connection line -->
-            <div class="absolute top-8 left-12 right-12 h-0.5 bg-gradient-to-r from-grayblue-600 via-grayblue-500 to-grayblue-400 hidden md:block"></div>
-
-            <!-- Stages -->
-            <div class="grid grid-cols-3 gap-4 md:gap-0 max-w-2xl mx-auto">
-              {projectPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group" style={`z-index: ${10 - index};`}>
-                  <div class="relative cursor-pointer">
-                    <!-- Circle with number (fades out on hover) -->
-                    <div
-                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110"
-                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    >
-                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-
-                    <!-- Expanded content (blooms from center on hover) -->
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl"
-                      style={`background-color: ${item.bg}; border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- Label (fades on hover) -->
-                  <span class="mt-3 text-sm text-grayblue-300 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-                </div>
+          <!-- Pipeline -->
+          <div class="relative flex items-center justify-between max-w-xl mx-auto">
+            <!-- Pipeline tube -->
+            <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500 hidden md:block"></div>
+            <!-- Flow arrows -->
+            <div class="absolute top-8 left-8 right-8 hidden md:flex items-center justify-around pointer-events-none" style="transform: translateY(-50%);">
+              {[1, 2].map(() => (
+                <svg class="w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                </svg>
               ))}
             </div>
-          </div>
-        </div>
 
-        <!-- Interests Bar -->
-        <div data-animate data-animate-delay="4" class="p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
-          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Areas of Interest</h3>
-          <div class="flex flex-wrap gap-3">
-            {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis", "Clinical Decision Support"].map((interest) => (
-              <span class="px-4 py-2 text-sm rounded-lg bg-grayblue-800/30 text-grayblue-200 border border-grayblue-700/20 hover:border-grayblue-600/40 transition-colors">
-                {interest}
-              </span>
+            <!-- Nodes -->
+            {projectPipeline.map((item, index) => (
+              <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
+                <div class="relative cursor-pointer">
+                  <!-- Circle node -->
+                  <div
+                    class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
+                    style={`border-color: ${item.color};`}
+                  >
+                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                  </div>
+
+                  <!-- Expanded content -->
+                  <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
+                    style={`border-color: ${item.color};`}
+                  >
+                    <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                    <ul class="space-y-1.5">
+                      {item.projects.map((project) => (
+                        <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                          <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                          <span>{project}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <!-- Label -->
+                <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
+              </div>
             ))}
           </div>
         </div>
