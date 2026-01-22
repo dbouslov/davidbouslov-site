@@ -2,27 +2,28 @@
 // Scroll-triggered fade-in animations using Intersection Observer
 ---
 
-<script>
-  // Add animation classes to elements with data-animate attribute
-  const animatedElements = document.querySelectorAll('[data-animate]');
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('[data-animate]');
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-          // Optionally unobserve after animation
-          // observer.unobserve(entry.target);
-        }
-      });
-    },
-    {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    }
-  );
+    if (animatedElements.length === 0) return;
 
-  animatedElements.forEach((el) => observer.observe(el));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    animatedElements.forEach((el) => observer.observe(el));
+  });
 </script>
 
 <style is:global>
@@ -33,7 +34,7 @@
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   }
 
-  /* Stagger delays for children */
+  /* Stagger delays */
   [data-animate-delay="1"] { transition-delay: 0.1s; }
   [data-animate-delay="2"] { transition-delay: 0.2s; }
   [data-animate-delay="3"] { transition-delay: 0.3s; }
@@ -45,27 +46,13 @@
     transform: translateY(0);
   }
 
-  /* Slide from left variant */
-  [data-animate="slide-left"] {
-    transform: translateX(-20px);
-  }
-  [data-animate="slide-left"].animate-in {
-    transform: translateX(0);
-  }
+  /* Slide variants */
+  [data-animate="slide-left"] { transform: translateX(-20px); }
+  [data-animate="slide-left"].animate-in { transform: translateX(0); }
 
-  /* Slide from right variant */
-  [data-animate="slide-right"] {
-    transform: translateX(20px);
-  }
-  [data-animate="slide-right"].animate-in {
-    transform: translateX(0);
-  }
+  [data-animate="slide-right"] { transform: translateX(20px); }
+  [data-animate="slide-right"].animate-in { transform: translateX(0); }
 
-  /* Scale up variant */
-  [data-animate="scale"] {
-    transform: scale(0.95);
-  }
-  [data-animate="scale"].animate-in {
-    transform: scale(1);
-  }
+  [data-animate="scale"] { transform: scale(0.95); }
+  [data-animate="scale"].animate-in { transform: scale(1); }
 </style>

@@ -1,0 +1,183 @@
+---
+// CursorTrail.astro - Subtle cursor trail effect
+// Only shows on desktop (non-touch devices)
+---
+
+<div id="cursor-trail-container"></div>
+
+<style>
+  #cursor-trail-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .trail-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+</style>
+
+<script>
+  interface Particle {
+    element: HTMLDivElement;
+    x: number;
+    y: number;
+    age: number;
+    maxAge: number;
+    size: number;
+  }
+
+  class CursorTrail {
+    private container: HTMLElement;
+    private particles: Particle[] = [];
+    private maxParticles = 10;
+    private mouseX = 0;
+    private mouseY = 0;
+    private lastX = 0;
+    private lastY = 0;
+    private isTouch = false;
+    private animationId: number | null = null;
+    private color = '98, 125, 152'; // #627d98 in RGB
+
+    constructor() {
+      this.container = document.getElementById('cursor-trail-container')!;
+      this.checkTouchDevice();
+
+      if (!this.isTouch) {
+        this.init();
+      }
+    }
+
+    private checkTouchDevice(): void {
+      this.isTouch = 'ontouchstart' in window ||
+                     navigator.maxTouchPoints > 0 ||
+                     window.matchMedia('(hover: none)').matches;
+    }
+
+    private init(): void {
+      document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+      document.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+      this.animate();
+    }
+
+    private handleMouseMove(e: MouseEvent): void {
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
+
+      // Only spawn particle if mouse has moved enough
+      const dx = this.mouseX - this.lastX;
+      const dy = this.mouseY - this.lastY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance > 8) {
+        this.spawnParticle();
+        this.lastX = this.mouseX;
+        this.lastY = this.mouseY;
+      }
+    }
+
+    private handleMouseLeave(): void {
+      // Let existing particles fade out naturally
+    }
+
+    private spawnParticle(): void {
+      // Remove oldest particle if at max
+      if (this.particles.length >= this.maxParticles) {
+        const oldest = this.particles.shift();
+        if (oldest) {
+          oldest.element.remove();
+        }
+      }
+
+      const element = document.createElement('div');
+      element.className = 'trail-particle';
+
+      // Random size between 2-4px
+      const size = 2 + Math.random() * 2;
+
+      element.style.width = `${size}px`;
+      element.style.height = `${size}px`;
+      element.style.backgroundColor = `rgba(${this.color}, 0.6)`;
+      element.style.left = `${this.mouseX - size / 2}px`;
+      element.style.top = `${this.mouseY - size / 2}px`;
+
+      this.container.appendChild(element);
+
+      this.particles.push({
+        element,
+        x: this.mouseX,
+        y: this.mouseY,
+        age: 0,
+        maxAge: 400 + Math.random() * 200, // 400-600ms lifespan
+        size
+      });
+    }
+
+    private animate(): void {
+      const now = performance.now();
+
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        const particle = this.particles[i];
+        particle.age += 16; // Approximate frame time
+
+        const progress = particle.age / particle.maxAge;
+
+        if (progress >= 1) {
+          particle.element.remove();
+          this.particles.splice(i, 1);
+          continue;
+        }
+
+        // Ease out for smooth fade
+        const easeOut = 1 - Math.pow(progress, 2);
+
+        // Fade opacity from 0.6 to 0
+        const opacity = 0.6 * easeOut;
+
+        // Shrink size
+        const scale = easeOut;
+
+        particle.element.style.opacity = String(opacity);
+        particle.element.style.transform = `scale(${scale})`;
+      }
+
+      this.animationId = requestAnimationFrame(this.animate.bind(this));
+    }
+
+    public destroy(): void {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+      }
+      this.particles.forEach(p => p.element.remove());
+      this.particles = [];
+    }
+  }
+
+  // Initialize on page load
+  let trail: CursorTrail | null = null;
+
+  document.addEventListener('astro:page-load', () => {
+    if (trail) {
+      trail.destroy();
+    }
+    trail = new CursorTrail();
+  });
+
+  // Fallback for non-Astro page loads
+  if (document.readyState === 'complete') {
+    trail = new CursorTrail();
+  } else {
+    window.addEventListener('load', () => {
+      if (!trail) {
+        trail = new CursorTrail();
+      }
+    });
+  }
+</script>

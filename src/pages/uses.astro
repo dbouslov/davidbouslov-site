@@ -3,31 +3,28 @@ import Layout from '../layouts/Layout.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
 import Logo from '../components/Logo.astro';
 
-const hardware = [
-  { name: "3 Monitor Setup", description: "Multi-display workspace for research and development" },
-  { name: "TONOR TC777 USB Microphone", description: "For recordings and voice input" },
-  { name: "Logitech Brio 101 Webcam", description: "Video calls and content creation" },
-  { name: "Windows PC", description: "Primary development machine" },
-];
-
 const development = [
-  { name: "Claude Code", description: "AI-assisted development and pair programming" },
-  { name: "VS Code", description: "Primary code editor" },
-  { name: "Windows Terminal", description: "Command line interface" },
-  { name: "Git / GitHub", description: "Version control and collaboration" },
-  { name: "Python, TypeScript, Astro", description: "Core languages and frameworks" },
+  { name: "Claude Code", description: "Primary development environment" },
+  { name: "VS Code", description: "Code editor" },
+  { name: "Git / GitHub", description: "Version control" },
+  { name: "Python, TypeScript, Astro", description: "Core stack" },
 ];
 
-const productivity = [
-  { name: "Anki", description: "Spaced repetition for medical school" },
-  { name: "Notion", description: "Notes and project management" },
-  { name: "Google Workspace", description: "Documents, sheets, and collaboration" },
+const medical = [
+  { name: "Anki + AnkiConnect", description: "Spaced repetition" },
+  { name: "UWorld", description: "Board prep" },
 ];
 
 const research = [
-  { name: "Python (pandas, numpy)", description: "Data manipulation and analysis" },
-  { name: "R", description: "Statistical analysis and visualization" },
-  { name: "CEA Frameworks", description: "Cost-effectiveness analysis tools" },
+  { name: "Python (pandas, numpy)", description: "Data analysis" },
+  { name: "R", description: "Statistics" },
+  { name: "Google Colab", description: "Notebooks" },
+];
+
+const productivity = [
+  { name: "Google Workspace", description: "Docs and collaboration" },
+  { name: "Notion", description: "Notes and projects" },
+  { name: "Custom CLI tools", description: "Daily planning with Claude Code" },
 ];
 ---
 
@@ -55,38 +52,15 @@ const research = [
     <section class="py-16 px-6">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-4xl md:text-5xl font-bold text-grayblue-100 mb-4">Uses</h1>
-        <p class="text-xl text-grayblue-400">Tools and tech I use daily</p>
-      </div>
-    </section>
-
-    <!-- Hardware Section -->
-    <section class="py-12 px-6">
-      <div class="max-w-4xl mx-auto">
-        <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-2xl">🖥️</span>
-            <h2 class="text-xl font-semibold text-grayblue-100">Hardware</h2>
-          </div>
-          <div class="grid md:grid-cols-2 gap-4">
-            {hardware.map((item) => (
-              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-                <h3 class="text-grayblue-100 font-medium">{item.name}</h3>
-                <p class="mt-1 text-sm text-grayblue-400">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p class="text-xl text-grayblue-400">Software and workflows</p>
       </div>
     </section>
 
     <!-- Development Section -->
-    <section class="py-12 px-6">
+    <section class="py-8 px-6">
       <div class="max-w-4xl mx-auto">
         <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-2xl">⚡</span>
-            <h2 class="text-xl font-semibold text-grayblue-100">Development</h2>
-          </div>
+          <h2 class="text-xl font-semibold text-grayblue-100 mb-6">Development</h2>
           <div class="grid md:grid-cols-2 gap-4">
             {development.map((item) => (
               <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
@@ -99,16 +73,13 @@ const research = [
       </div>
     </section>
 
-    <!-- Productivity Section -->
-    <section class="py-12 px-6">
+    <!-- Medical Education Section -->
+    <section class="py-8 px-6">
       <div class="max-w-4xl mx-auto">
         <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-2xl">📋</span>
-            <h2 class="text-xl font-semibold text-grayblue-100">Productivity</h2>
-          </div>
-          <div class="grid md:grid-cols-3 gap-4">
-            {productivity.map((item) => (
+          <h2 class="text-xl font-semibold text-grayblue-100 mb-6">Medical Education</h2>
+          <div class="grid md:grid-cols-2 gap-4">
+            {medical.map((item) => (
               <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
                 <h3 class="text-grayblue-100 font-medium">{item.name}</h3>
                 <p class="mt-1 text-sm text-grayblue-400">{item.description}</p>
@@ -119,16 +90,30 @@ const research = [
       </div>
     </section>
 
-    <!-- Research & Analysis Section -->
-    <section class="py-12 px-6 pb-24">
+    <!-- Research Section -->
+    <section class="py-8 px-6">
       <div class="max-w-4xl mx-auto">
         <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="text-2xl">📊</span>
-            <h2 class="text-xl font-semibold text-grayblue-100">Research & Analysis</h2>
-          </div>
+          <h2 class="text-xl font-semibold text-grayblue-100 mb-6">Research</h2>
           <div class="grid md:grid-cols-3 gap-4">
             {research.map((item) => (
+              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+                <h3 class="text-grayblue-100 font-medium">{item.name}</h3>
+                <p class="mt-1 text-sm text-grayblue-400">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Productivity Section -->
+    <section class="py-8 px-6 pb-24">
+      <div class="max-w-4xl mx-auto">
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
+          <h2 class="text-xl font-semibold text-grayblue-100 mb-6">Productivity</h2>
+          <div class="grid md:grid-cols-3 gap-4">
+            {productivity.map((item) => (
               <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
                 <h3 class="text-grayblue-100 font-medium">{item.name}</h3>
                 <p class="mt-1 text-sm text-grayblue-400">{item.description}</p>

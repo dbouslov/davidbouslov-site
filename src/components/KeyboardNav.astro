@@ -1,0 +1,179 @@
+---
+// KeyboardNav.astro - Easter egg keyboard navigation
+// Press ? to see available shortcuts
+---
+
+<div id="keyboard-hint" class="keyboard-hint" aria-hidden="true">
+  <div class="hint-content">
+    <span class="hint-title">Keyboard Navigation</span>
+    <div class="hint-shortcuts">
+      <span><kbd>1</kbd> About</span>
+      <span><kbd>2</kbd> Work</span>
+      <span><kbd>3</kbd> Publications</span>
+      <span><kbd>4</kbd> /now</span>
+      <span><kbd>5</kbd> /uses</span>
+      <span><kbd>g h</kbd> Home</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .keyboard-hint {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(55, 65, 81, 0.95);
+    color: #9ca3af;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(0.5rem);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(107, 114, 128, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .keyboard-hint.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .hint-title {
+    display: block;
+    color: #d1d5db;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .hint-shortcuts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem 1rem;
+  }
+
+  .hint-shortcuts span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  kbd {
+    display: inline-block;
+    background: rgba(75, 85, 99, 0.8);
+    color: #e5e7eb;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    font-size: 0.7rem;
+    border: 1px solid rgba(107, 114, 128, 0.5);
+    min-width: 1.25rem;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const hint = document.getElementById('keyboard-hint');
+  let hideTimeout: ReturnType<typeof setTimeout> | null = null;
+  let lastKeyTime = 0;
+  let lastKey = '';
+
+  function showHint() {
+    if (!hint) return;
+    hint.classList.add('visible');
+
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+    }
+
+    hideTimeout = setTimeout(() => {
+      hint.classList.remove('visible');
+    }, 3000);
+  }
+
+  function hideHint() {
+    if (!hint) return;
+    hint.classList.remove('visible');
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+  }
+
+  function scrollToSection(id: string) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function navigateTo(path: string) {
+    window.location.href = path;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    // Ignore if user is typing in an input field
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+      return;
+    }
+
+    const now = Date.now();
+    const key = e.key.toLowerCase();
+
+    // Check for vim-style 'g h' navigation (within 500ms)
+    if (key === 'h' && lastKey === 'g' && (now - lastKeyTime) < 500) {
+      e.preventDefault();
+      navigateTo('/');
+      lastKey = '';
+      return;
+    }
+
+    // Store key for vim-style combos
+    lastKey = key;
+    lastKeyTime = now;
+
+    // Handle single key shortcuts
+    switch (key) {
+      case '?':
+        e.preventDefault();
+        if (hint?.classList.contains('visible')) {
+          hideHint();
+        } else {
+          showHint();
+        }
+        break;
+      case '1':
+        e.preventDefault();
+        scrollToSection('about');
+        break;
+      case '2':
+        e.preventDefault();
+        scrollToSection('work');
+        break;
+      case '3':
+        e.preventDefault();
+        scrollToSection('publications');
+        break;
+      case '4':
+        e.preventDefault();
+        navigateTo('/now');
+        break;
+      case '5':
+        e.preventDefault();
+        navigateTo('/uses');
+        break;
+      case 'g':
+        // Don't prevent default for 'g' - it's part of a combo
+        break;
+      case 'escape':
+        hideHint();
+        break;
+    }
+  });
+</script>

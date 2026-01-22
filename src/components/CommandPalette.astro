@@ -1,0 +1,309 @@
+---
+// Command Palette Component
+// Opens with Cmd+K (Mac) or Ctrl+K (Windows)
+// Keyboard navigation with arrow keys, Enter to navigate, Escape to close
+
+interface NavItem {
+  label: string;
+  href: string;
+  description?: string;
+}
+
+const navItems: NavItem[] = [
+  { label: "Home", href: "/", description: "Go to homepage" },
+  { label: "About", href: "/#about", description: "Learn about me" },
+  { label: "Work", href: "/#work", description: "View my work pipeline" },
+  { label: "Publications", href: "/#publications", description: "Peer-reviewed research" },
+  { label: "Now", href: "/now", description: "What I'm currently focused on" },
+  { label: "Uses", href: "/uses", description: "Tools and equipment I use" },
+  { label: "Projects", href: "/projects", description: "View all projects" },
+];
+---
+
+<!-- Command Palette Modal -->
+<div id="command-palette" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="command-palette-title">
+  <!-- Backdrop -->
+  <div id="command-palette-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+  <!-- Modal Container -->
+  <div class="absolute inset-0 flex items-start justify-center pt-[20vh]">
+    <div id="command-palette-modal" class="relative w-full max-w-lg mx-4 bg-grayblue-900 border border-grayblue-700 rounded-xl shadow-2xl overflow-hidden">
+      <!-- Search Input -->
+      <div class="flex items-center px-4 border-b border-grayblue-700">
+        <svg class="w-5 h-5 text-grayblue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          id="command-palette-input"
+          type="text"
+          placeholder="Search pages..."
+          class="w-full px-3 py-4 bg-transparent text-grayblue-100 placeholder-grayblue-500 focus:outline-none text-base"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <kbd class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-medium text-grayblue-500 bg-grayblue-800 rounded border border-grayblue-700">
+          esc
+        </kbd>
+      </div>
+
+      <!-- Results List -->
+      <ul id="command-palette-results" class="max-h-80 overflow-y-auto py-2" role="listbox">
+        {navItems.map((item, index) => (
+          <li
+            data-index={index}
+            data-href={item.href}
+            data-label={item.label.toLowerCase()}
+            data-description={item.description?.toLowerCase() || ""}
+            class="command-palette-item px-4 py-3 cursor-pointer flex items-center justify-between group"
+            role="option"
+            aria-selected="false"
+          >
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-grayblue-500 group-hover:text-grayblue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+              <div>
+                <span class="text-grayblue-100 font-medium">{item.label}</span>
+                {item.description && (
+                  <span class="ml-2 text-sm text-grayblue-500">{item.description}</span>
+                )}
+              </div>
+            </div>
+            <svg class="w-4 h-4 text-grayblue-600 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Empty State -->
+      <div id="command-palette-empty" class="hidden px-4 py-8 text-center">
+        <p class="text-grayblue-500">No results found</p>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-4 py-3 border-t border-grayblue-700 flex items-center justify-between text-xs text-grayblue-500">
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1">
+            <kbd class="px-1.5 py-0.5 bg-grayblue-800 rounded border border-grayblue-700">↑</kbd>
+            <kbd class="px-1.5 py-0.5 bg-grayblue-800 rounded border border-grayblue-700">↓</kbd>
+            <span class="ml-1">Navigate</span>
+          </span>
+          <span class="flex items-center gap-1">
+            <kbd class="px-1.5 py-0.5 bg-grayblue-800 rounded border border-grayblue-700">↵</kbd>
+            <span class="ml-1">Open</span>
+          </span>
+        </div>
+        <span class="flex items-center gap-1">
+          <kbd class="px-1.5 py-0.5 bg-grayblue-800 rounded border border-grayblue-700">esc</kbd>
+          <span class="ml-1">Close</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Command Palette Logic
+  (function() {
+    const palette = document.getElementById('command-palette');
+    const backdrop = document.getElementById('command-palette-backdrop');
+    const input = document.getElementById('command-palette-input') as HTMLInputElement;
+    const results = document.getElementById('command-palette-results');
+    const emptyState = document.getElementById('command-palette-empty');
+    const items = document.querySelectorAll('.command-palette-item') as NodeListOf<HTMLElement>;
+
+    let selectedIndex = 0;
+    let visibleItems: HTMLElement[] = [];
+
+    // Open palette
+    function open() {
+      palette?.classList.remove('hidden');
+      input?.focus();
+      input.value = '';
+      filterItems('');
+      updateSelection(0);
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close palette
+    function close() {
+      palette?.classList.add('hidden');
+      input.value = '';
+      document.body.style.overflow = '';
+    }
+
+    // Filter items based on query
+    function filterItems(query: string) {
+      const normalizedQuery = query.toLowerCase().trim();
+      visibleItems = [];
+
+      items.forEach((item) => {
+        const label = item.dataset.label || '';
+        const description = item.dataset.description || '';
+        const matches = label.includes(normalizedQuery) || description.includes(normalizedQuery);
+
+        if (matches || normalizedQuery === '') {
+          item.classList.remove('hidden');
+          visibleItems.push(item);
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      // Show/hide empty state
+      if (visibleItems.length === 0) {
+        emptyState?.classList.remove('hidden');
+        results?.classList.add('hidden');
+      } else {
+        emptyState?.classList.add('hidden');
+        results?.classList.remove('hidden');
+      }
+
+      // Reset selection
+      updateSelection(0);
+    }
+
+    // Update selected item
+    function updateSelection(index: number) {
+      if (visibleItems.length === 0) return;
+
+      // Clamp index
+      selectedIndex = Math.max(0, Math.min(index, visibleItems.length - 1));
+
+      // Update aria and styling
+      visibleItems.forEach((item, i) => {
+        if (i === selectedIndex) {
+          item.setAttribute('aria-selected', 'true');
+          item.classList.add('bg-grayblue-800/50');
+          item.scrollIntoView({ block: 'nearest' });
+        } else {
+          item.setAttribute('aria-selected', 'false');
+          item.classList.remove('bg-grayblue-800/50');
+        }
+      });
+    }
+
+    // Navigate to selected item
+    function navigateToSelected() {
+      if (visibleItems.length === 0) return;
+
+      const selectedItem = visibleItems[selectedIndex];
+      const href = selectedItem?.dataset.href;
+
+      if (href) {
+        close();
+        window.location.href = href;
+      }
+    }
+
+    // Keyboard shortcut to open (Cmd+K or Ctrl+K)
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (palette?.classList.contains('hidden')) {
+          open();
+        } else {
+          close();
+        }
+      }
+    });
+
+    // Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !palette?.classList.contains('hidden')) {
+        e.preventDefault();
+        close();
+      }
+    });
+
+    // Click backdrop to close
+    backdrop?.addEventListener('click', close);
+
+    // Input events
+    input?.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement;
+      filterItems(target.value);
+    });
+
+    // Keyboard navigation in input
+    input?.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          updateSelection(selectedIndex + 1);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          updateSelection(selectedIndex - 1);
+          break;
+        case 'Enter':
+          e.preventDefault();
+          navigateToSelected();
+          break;
+      }
+    });
+
+    // Click on item
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const href = item.dataset.href;
+        if (href) {
+          close();
+          window.location.href = href;
+        }
+      });
+
+      // Hover to select
+      item.addEventListener('mouseenter', () => {
+        const index = visibleItems.indexOf(item);
+        if (index !== -1) {
+          updateSelection(index);
+        }
+      });
+    });
+  })();
+</script>
+
+<style>
+  .command-palette-item {
+    transition: background-color 0.1s ease;
+  }
+
+  .command-palette-item:hover {
+    background-color: rgba(36, 59, 83, 0.5);
+  }
+
+  .command-palette-item[aria-selected="true"] {
+    background-color: rgba(36, 59, 83, 0.5);
+  }
+
+  /* Smooth modal animation */
+  #command-palette {
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  #command-palette-modal {
+    animation: slideIn 0.15s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+</style>
