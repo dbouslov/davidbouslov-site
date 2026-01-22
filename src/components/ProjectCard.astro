@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+  icon?: string;
+}
+
+const { title, description, tags, link, icon = "🚀" } = Astro.props;
+---
+
+<a
+  href={link || "#"}
+  target={link ? "_blank" : undefined}
+  rel={link ? "noopener noreferrer" : undefined}
+  class="group block p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-grayblue-500/30 transition-all duration-300"
+>
+  <div class="flex items-start gap-4">
+    <span class="text-3xl">{icon}</span>
+    <div class="flex-1">
+      <h3 class="text-lg font-semibold text-grayblue-100 group-hover:text-grayblue-50 transition-colors">
+        {title}
+        {link && (
+          <span class="inline-block ml-2 opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+        )}
+      </h3>
+      <p class="mt-2 text-sm text-grayblue-400 leading-relaxed">
+        {description}
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span class="px-2 py-1 text-xs rounded-full bg-grayblue-800/50 text-grayblue-300 border border-grayblue-700/30">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</a>
