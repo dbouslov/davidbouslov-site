@@ -80,6 +80,9 @@
       targetMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     });
 
+    // Brownian motion parameters
+    const brownianStrength = 0.003; // Very mild random kicks
+
     // Animation
     function animate() {
       requestAnimationFrame(animate);
@@ -94,6 +97,16 @@
       // Update particle positions
       for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
+
+        // Brownian motion: random kicks each frame
+        velocities[i3] += (Math.random() - 0.5) * brownianStrength;
+        velocities[i3 + 1] += (Math.random() - 0.5) * brownianStrength;
+        velocities[i3 + 2] += (Math.random() - 0.5) * brownianStrength * 0.5;
+
+        // Damping to prevent runaway velocities
+        velocities[i3] *= 0.98;
+        velocities[i3 + 1] *= 0.98;
+        velocities[i3 + 2] *= 0.98;
 
         // Add subtle drift
         positions[i3] += velocities[i3];
