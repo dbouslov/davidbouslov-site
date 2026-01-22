@@ -11,16 +11,19 @@ const publications = [
     title: "An Early Pipeline Framework for Assessing Vendor AI Solutions to Support Return on Investment",
     venue: "NPJ Digital Medicine",
     year: "2025",
+    url: "https://pubmed.ncbi.nlm.nih.gov/40523928/",
   },
   {
     title: "Glucagon and Insulin Cross Talk Regulates Hepatic Glycogen Metabolism",
     venue: "Diabetes",
     year: "2024",
+    url: null, // Add link when available
   },
   {
-    title: "β Cell Gαs Signaling and Glucose Homeostasis",
+    title: "β Cell Gαs Signaling is Critical for Physiological and Pharmacological Enhancement of Insulin Secretion",
     venue: "Journal of Clinical Investigation",
     year: "2025",
+    url: "https://pubmed.ncbi.nlm.nih.gov/40526441/",
   },
 ];
 
@@ -317,12 +320,24 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
 
         <div data-animate data-animate-delay="2" class="space-y-4">
           {publications.map((pub) => (
-            <div class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300" data-tilt>
-              <h4 class="text-base font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
-              <p class="mt-2 text-sm text-grayblue-400">
-                <span class="text-grayblue-300">{pub.venue}</span> · {pub.year}
-              </p>
-            </div>
+            pub.url ? (
+              <a href={pub.url} target="_blank" rel="noopener noreferrer" class="block p-5 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-grayblue-600/40 transition-all duration-300 group" data-tilt>
+                <h4 class="text-base font-medium text-grayblue-100 leading-relaxed group-hover:text-white transition-colors">{pub.title}</h4>
+                <p class="mt-2 text-sm text-grayblue-400 flex items-center gap-2">
+                  <span class="text-grayblue-300">{pub.venue}</span> · {pub.year}
+                  <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                </p>
+              </a>
+            ) : (
+              <div class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300" data-tilt>
+                <h4 class="text-base font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
+                <p class="mt-2 text-sm text-grayblue-400">
+                  <span class="text-grayblue-300">{pub.venue}</span> · {pub.year}
+                </p>
+              </div>
+            )
           ))}
         </div>
       </div>
