@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!--
+    DB Monogram - Structural Resonance
+
+    Central spine shared by D (left) and B (right).
+    D: Single continuous curve.
+    B: Two stacked curves, upper slightly smaller (golden ratio: 38.2% / 61.8%).
+
+    The forms mirror and balance - D's openness counterweights B's density.
+  -->
+
+  <g fill="none" stroke="#627d98" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Central spine -->
+    <line x1="50" y1="10" x2="50" y2="90"/>
+
+    <!-- D curve (left) - single elegant arc -->
+    <path d="M 50 10 C 12 10, 12 90, 50 90"/>
+
+    <!-- B upper curve (right) - 38.2% of height -->
+    <path d="M 50 10 C 80 10, 80 40.5, 50 40.5"/>
+
+    <!-- B lower curve (right) - 61.8% of height, slightly fuller -->
+    <path d="M 50 40.5 C 84 40.5, 84 90, 50 90"/>
+
+  </g>
+</svg>
