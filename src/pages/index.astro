@@ -219,51 +219,97 @@ const projectPipeline = [
         <div data-animate data-animate-delay="2" class="mb-16">
           <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Research</h3>
 
-          <!-- Pipeline -->
-          <div class="relative flex items-center justify-between max-w-3xl mx-auto">
-            <!-- Pipeline tube -->
-            <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500 hidden md:block"></div>
-            <!-- Flow arrows -->
-            <div class="absolute top-8 left-8 right-8 hidden md:flex items-center justify-between pointer-events-none" style="transform: translateY(-50%);">
-              {[1, 2, 3].map((_, i) => (
-                <svg class="w-3 h-3 text-grayblue-500 opacity-60" style={`margin-left: ${22 + i * 2}%;`} fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                </svg>
+          <!-- Desktop: Horizontal Pipeline -->
+          <div class="hidden md:block">
+            <div class="relative flex items-center justify-between max-w-3xl mx-auto">
+              <!-- Pipeline tube -->
+              <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
+              <!-- Flow arrows -->
+              <div class="absolute top-8 left-8 right-8 flex items-center justify-between pointer-events-none" style="transform: translateY(-50%);">
+                {[1, 2, 3].map((_, i) => (
+                  <svg class="w-3 h-3 text-grayblue-500 opacity-60" style={`margin-left: ${22 + i * 2}%;`} fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                  </svg>
+                ))}
+              </div>
+
+              <!-- Nodes -->
+              {researchPipeline.map((item, index) => (
+                <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
+                  <div class="relative cursor-pointer">
+                    <div
+                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1.5">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
+                </div>
               ))}
             </div>
+          </div>
 
-            <!-- Nodes -->
-            {researchPipeline.map((item, index) => (
-              <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
-                <div class="relative cursor-pointer">
-                  <!-- Circle node -->
-                  <div
-                    class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
-                    style={`border-color: ${item.color};`}
-                  >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                  </div>
+          <!-- Mobile: Vertical Pipeline -->
+          <div class="md:hidden relative pl-8">
+            <!-- Vertical tube -->
+            <div class="absolute left-[31px] top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
 
-                  <!-- Expanded content -->
-                  <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
-                    style={`border-color: ${item.color};`}
-                  >
-                    <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                    <ul class="space-y-1.5">
-                      {item.projects.map((project) => (
-                        <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                          <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                          <span>{project}</span>
-                        </li>
-                      ))}
-                    </ul>
+            <div class="space-y-6">
+              {researchPipeline.map((item, index) => (
+                <div class="flex items-center gap-4 relative group" style={`z-index: ${10 - index};`}>
+                  <!-- Node -->
+                  <div class="relative cursor-pointer flex-shrink-0">
+                    <div
+                      class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-active:opacity-0 group-active:scale-110 bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <span class="text-xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+                    <!-- Expanded (tap on mobile) -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-active:opacity-100 group-active:scale-100 transition-all duration-300 ease-out shadow-xl bg-grayblue-950 z-20"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1.5">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+                  <!-- Label inline -->
+                  <div>
+                    <span class="text-sm text-grayblue-200 font-medium">{item.stage}</span>
+                    <p class="text-xs text-grayblue-500">{item.count} {item.count === 1 ? 'project' : 'projects'}</p>
+                  </div>
+                  <!-- Down arrow (except last) -->
+                  {index < researchPipeline.length - 1 && (
+                    <svg class="absolute left-[26px] -bottom-5 w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                  )}
                 </div>
-                <!-- Label -->
-                <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
@@ -271,51 +317,97 @@ const projectPipeline = [
         <div data-animate data-animate-delay="3">
           <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Projects</h3>
 
-          <!-- Pipeline -->
-          <div class="relative flex items-center justify-between max-w-xl mx-auto">
-            <!-- Pipeline tube -->
-            <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500 hidden md:block"></div>
-            <!-- Flow arrows -->
-            <div class="absolute top-8 left-8 right-8 hidden md:flex items-center justify-around pointer-events-none" style="transform: translateY(-50%);">
-              {[1, 2].map(() => (
-                <svg class="w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                </svg>
+          <!-- Desktop: Horizontal Pipeline -->
+          <div class="hidden md:block">
+            <div class="relative flex items-center justify-between max-w-xl mx-auto">
+              <!-- Pipeline tube -->
+              <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
+              <!-- Flow arrows -->
+              <div class="absolute top-8 left-8 right-8 flex items-center justify-around pointer-events-none" style="transform: translateY(-50%);">
+                {[1, 2].map(() => (
+                  <svg class="w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                  </svg>
+                ))}
+              </div>
+
+              <!-- Nodes -->
+              {projectPipeline.map((item, index) => (
+                <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
+                  <div class="relative cursor-pointer">
+                    <div
+                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1.5">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
+                </div>
               ))}
             </div>
+          </div>
 
-            <!-- Nodes -->
-            {projectPipeline.map((item, index) => (
-              <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
-                <div class="relative cursor-pointer">
-                  <!-- Circle node -->
-                  <div
-                    class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
-                    style={`border-color: ${item.color};`}
-                  >
-                    <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                  </div>
+          <!-- Mobile: Vertical Pipeline -->
+          <div class="md:hidden relative pl-8">
+            <!-- Vertical tube -->
+            <div class="absolute left-[31px] top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
 
-                  <!-- Expanded content -->
-                  <div
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
-                    style={`border-color: ${item.color};`}
-                  >
-                    <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                    <ul class="space-y-1.5">
-                      {item.projects.map((project) => (
-                        <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                          <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                          <span>{project}</span>
-                        </li>
-                      ))}
-                    </ul>
+            <div class="space-y-6">
+              {projectPipeline.map((item, index) => (
+                <div class="flex items-center gap-4 relative group" style={`z-index: ${10 - index};`}>
+                  <!-- Node -->
+                  <div class="relative cursor-pointer flex-shrink-0">
+                    <div
+                      class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-active:opacity-0 group-active:scale-110 bg-grayblue-950"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <span class="text-xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
+                    </div>
+                    <!-- Expanded (tap on mobile) -->
+                    <div
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-active:opacity-100 group-active:scale-100 transition-all duration-300 ease-out shadow-xl bg-grayblue-950 z-20"
+                      style={`border-color: ${item.color};`}
+                    >
+                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
+                      <ul class="space-y-1.5">
+                        {item.projects.map((project) => (
+                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
+                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
+                            <span>{project}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
+                  <!-- Label inline -->
+                  <div>
+                    <span class="text-sm text-grayblue-200 font-medium">{item.stage}</span>
+                    <p class="text-xs text-grayblue-500">{item.count} {item.count === 1 ? 'project' : 'projects'}</p>
+                  </div>
+                  <!-- Down arrow (except last) -->
+                  {index < projectPipeline.length - 1 && (
+                    <svg class="absolute left-[26px] -bottom-5 w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
+                  )}
                 </div>
-                <!-- Label -->
-                <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
