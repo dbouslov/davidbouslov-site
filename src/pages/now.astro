@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ParticleBackground from '../components/ParticleBackground.astro';
+import Logo from '../components/Logo.astro';
+---
+
+<Layout title="Now | David Bouslov">
+  <ParticleBackground />
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-sm bg-black/20">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <a href="/" class="text-grayblue-100 hover:text-white transition-colors">
+        <Logo size={36} />
+      </a>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/#about" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">About</a>
+        <a href="/#work" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Work</a>
+        <a href="/#publications" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Publications</a>
+        <a href="/now" class="text-grayblue-100 transition-colors">Now</a>
+        <a href="/uses" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Uses</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="relative z-10 pt-24 pb-16 px-6">
+    <div class="max-w-3xl mx-auto">
+      <!-- Header -->
+      <header class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-grayblue-100 mb-4">Now</h1>
+        <p class="text-xl text-grayblue-400 font-light mb-2">What I'm currently focused on</p>
+        <p class="text-sm text-grayblue-500">Last updated: January 2026</p>
+      </header>
+
+      <!-- Currently Section -->
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-grayblue-200 mb-4">Currently</h2>
+        <div class="space-y-3">
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <div class="flex items-start gap-3">
+              <span class="text-lg">🏥</span>
+              <div>
+                <p class="text-grayblue-200 font-medium">Clinical</p>
+                <p class="text-grayblue-400 text-sm">Internal Medicine clerkship at Hackensack University Medical Center</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <div class="flex items-start gap-3">
+              <span class="text-lg">📚</span>
+              <div>
+                <p class="text-grayblue-200 font-medium">Studying</p>
+                <p class="text-grayblue-400 text-sm">Working through Anki backlog, UWorld questions for shelf exam</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <div class="flex items-start gap-3">
+              <span class="text-lg">🔬</span>
+              <div>
+                <p class="text-grayblue-200 font-medium">Research</p>
+                <p class="text-grayblue-400 text-sm">Health economics projects, AI governance frameworks</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Building Section -->
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-grayblue-200 mb-4">Building</h2>
+        <div class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+          <p class="text-grayblue-300 mb-4">
+            Tools that solve problems I encounter in medical education and research.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-sm rounded-full bg-grayblue-800/30 text-grayblue-300 border border-grayblue-700/20">
+              Study optimization
+            </span>
+            <span class="px-3 py-1 text-sm rounded-full bg-grayblue-800/30 text-grayblue-300 border border-grayblue-700/20">
+              Clinical decision support
+            </span>
+            <span class="px-3 py-1 text-sm rounded-full bg-grayblue-800/30 text-grayblue-300 border border-grayblue-700/20">
+              Cost-effectiveness analysis tools
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reading Section -->
+      <section class="mb-10">
+        <h2 class="text-xl font-semibold text-grayblue-200 mb-4">Reading</h2>
+        <div class="space-y-3">
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <p class="text-grayblue-300">Health economics methods for cost-effectiveness analysis</p>
+          </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <p class="text-grayblue-300">AI governance frameworks in healthcare settings</p>
+          </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+            <p class="text-grayblue-300">Clinical decision-making under uncertainty</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Note -->
+      <footer class="pt-8 border-t border-white/[0.06]">
+        <p class="text-sm text-grayblue-500">
+          This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" class="text-grayblue-400 hover:text-grayblue-300 underline underline-offset-2">Now page</a>.
+          It's a snapshot of what I'm focused on at this point in my life.
+        </p>
+      </footer>
+    </div>
+  </main>
+</Layout>
