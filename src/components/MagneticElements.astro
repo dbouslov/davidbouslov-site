@@ -1,0 +1,50 @@
+---
+// MagneticElements.astro - Subtle magnetic pull effect on buttons and links
+---
+
+<script is:inline>
+(function() {
+  const magneticStrength = 0.3;
+  const magneticRadius = 50;
+
+  function initMagnetic() {
+    // Target buttons and nav links
+    const elements = document.querySelectorAll('a[href], button, [data-magnetic]');
+
+    elements.forEach(el => {
+      if (el.closest('#command-palette') || el.closest('.trail-particle')) return;
+
+      el.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const deltaX = e.clientX - centerX;
+        const deltaY = e.clientY - centerY;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if (distance < magneticRadius) {
+          const pullX = deltaX * magneticStrength;
+          const pullY = deltaY * magneticStrength;
+          this.style.transform = 'translate(' + pullX + 'px, ' + pullY + 'px)';
+          this.style.transition = 'transform 0.15s ease-out';
+        }
+      });
+
+      el.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+        this.style.transition = 'transform 0.3s ease-out';
+      });
+    });
+  }
+
+  // Run on page load and after view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMagnetic);
+  } else {
+    initMagnetic();
+  }
+
+  document.addEventListener('astro:page-load', initMagnetic);
+})();
+</script>

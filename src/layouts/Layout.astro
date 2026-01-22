@@ -1,9 +1,13 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/global.css';
 import ScrollAnimations from '../components/ScrollAnimations.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import KeyboardNav from '../components/KeyboardNav.astro';
 import CursorTrail from '../components/CursorTrail.astro';
+import MagneticElements from '../components/MagneticElements.astro';
+import TiltCards from '../components/TiltCards.astro';
+import CopyEmail from '../components/CopyEmail.astro';
 
 interface Props {
   title: string;
@@ -15,6 +19,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
+    <ViewTransitions />
     <meta charset="UTF-8" />
     <meta name="description" content="David Bouslov - Medical Student, Researcher, Builder" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,5 +36,8 @@ const { title } = Astro.props;
     <ScrollAnimations />
     <KeyboardNav />
     <CommandPalette />
+    <MagneticElements />
+    <TiltCards />
+    <CopyEmail />
   </body>
 </html>

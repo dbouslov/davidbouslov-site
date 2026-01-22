@@ -1,0 +1,171 @@
+---
+// StudyActivity.astro
+// A decorative activity graph representing daily study consistency
+
+interface Props {
+  seed?: number;
+  weeks?: number;
+}
+
+const { seed = 2026, weeks = 20 } = Astro.props;
+
+// Simple seeded random number generator (mulberry32)
+function createSeededRandom(seed: number) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+const random = createSeededRandom(seed);
+
+// Activity levels: 0 = rest, 1 = light, 2 = moderate, 3 = focused, 4 = intense
+function generateActivityLevel(dayOfWeek: number): number {
+  const r = random();
+
+  // Weekdays have more activity (studying pattern)
+  const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5;
+
+  if (isWeekday) {
+    if (r < 0.08) return 0;      // 8% rest day
+    if (r < 0.25) return 1;      // 17% light
+    if (r < 0.50) return 2;      // 25% moderate
+    if (r < 0.80) return 3;      // 30% focused
+    return 4;                     // 20% intense
+  } else {
+    // Weekends - lighter but still some activity
+    if (r < 0.30) return 0;      // 30% rest
+    if (r < 0.55) return 1;      // 25% light
+    if (r < 0.75) return 2;      // 20% moderate
+    if (r < 0.90) return 3;      // 15% focused
+    return 4;                     // 10% intense
+  }
+}
+
+// Generate review counts based on level
+function getReviewCount(level: number): number {
+  const baseCounts = [0, 45, 120, 250, 400];
+  const variance = level > 0 ? Math.floor(random() * 50) : 0;
+  return baseCounts[level] + variance;
+}
+
+// Generate the grid data (7 rows x N weeks)
+const grid: { level: number; reviews: number }[][] = [];
+
+for (let week = 0; week < weeks; week++) {
+  const weekData: { level: number; reviews: number }[] = [];
+  for (let day = 0; day < 7; day++) {
+    const level = generateActivityLevel(day);
+    const reviews = getReviewCount(level);
+    weekData.push({ level, reviews });
+  }
+  grid.push(weekData);
+}
+
+// Calculate stats
+let totalReviews = 0;
+let activeDays = 0;
+grid.forEach(week => {
+  week.forEach(day => {
+    totalReviews += day.reviews;
+    if (day.level > 0) activeDays++;
+  });
+});
+
+const avgPerDay = Math.round(totalReviews / (weeks * 7));
+---
+
+<div class="study-activity w-full">
+  <!-- Stats row -->
+  <div class="flex items-center justify-between mb-4 text-xs text-grayblue-400">
+    <span>{totalReviews.toLocaleString()} cards reviewed</span>
+    <span>{activeDays} active days</span>
+  </div>
+
+  <!-- Grid container - full width with horizontal scroll on mobile -->
+  <div class="overflow-x-auto pb-2">
+    <div class="flex gap-[3px] min-w-max">
+      {grid.map((week, weekIndex) => (
+        <div class="flex flex-col gap-[3px]">
+          {week.map((day, dayIndex) => (
+            <div
+              class:list={[
+                'study-square w-[12px] h-[12px] rounded-[2px] cursor-pointer transition-all duration-200 hover:ring-1 hover:ring-grayblue-400/50',
+                {
+                  'bg-grayblue-900/40': day.level === 0,
+                  'bg-grayblue-700/80': day.level === 1,
+                  'bg-grayblue-600': day.level === 2,
+                  'bg-grayblue-500': day.level === 3,
+                  'bg-grayblue-400': day.level === 4,
+                }
+              ]}
+              data-reviews={day.reviews}
+              data-week={weekIndex}
+              data-day={dayIndex}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="flex items-center justify-between mt-3">
+    <div class="flex items-center gap-2 text-[10px] text-grayblue-500">
+      <span>Less</span>
+      <div class="flex gap-[2px]">
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-900/40"></div>
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-700/80"></div>
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-600"></div>
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-500"></div>
+        <div class="w-[10px] h-[10px] rounded-[2px] bg-grayblue-400"></div>
+      </div>
+      <span>More</span>
+    </div>
+    <span class="text-[10px] text-grayblue-500">~{avgPerDay} avg/day</span>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="study-tooltip" class="fixed pointer-events-none opacity-0 transition-opacity duration-150 px-2 py-1 text-xs bg-grayblue-800 text-grayblue-100 rounded shadow-lg border border-grayblue-700/50 z-50">
+    0 cards
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  function initStudyTooltip() {
+    const squares = document.querySelectorAll('.study-square');
+    const tooltip = document.getElementById('study-tooltip');
+
+    if (!tooltip) return;
+
+    squares.forEach(function(square) {
+      square.addEventListener('mouseenter', function(e) {
+        var reviews = this.getAttribute('data-reviews') || '0';
+        var text = reviews === '1' ? '1 card reviewed' : reviews + ' cards reviewed';
+        tooltip.textContent = text;
+        tooltip.style.opacity = '1';
+      });
+
+      square.addEventListener('mousemove', function(e) {
+        tooltip.style.left = (e.clientX + 10) + 'px';
+        tooltip.style.top = (e.clientY - 30) + 'px';
+      });
+
+      square.addEventListener('mouseleave', function() {
+        tooltip.style.opacity = '0';
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStudyTooltip);
+  } else {
+    initStudyTooltip();
+  }
+
+  document.addEventListener('astro:page-load', initStudyTooltip);
+})();
+</script>

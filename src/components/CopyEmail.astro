@@ -1,0 +1,77 @@
+---
+// CopyEmail.astro - Click to copy email with toast notification
+---
+
+<div id="copy-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-grayblue-800 text-grayblue-100 text-sm rounded-lg shadow-lg border border-grayblue-700/50 opacity-0 pointer-events-none transition-all duration-300 z-50">
+  <span class="flex items-center gap-2">
+    <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+    Email copied to clipboard
+  </span>
+</div>
+
+<style is:global>
+  [data-copy-email] {
+    cursor: pointer;
+  }
+
+  [data-copy-email]:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<script is:inline>
+(function() {
+  const email = 'david@bouslov.com';
+  const toast = document.getElementById('copy-toast');
+
+  function initCopyEmail() {
+    const triggers = document.querySelectorAll('[data-copy-email]');
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', async function(e) {
+        e.preventDefault();
+
+        try {
+          await navigator.clipboard.writeText(email);
+          showToast();
+        } catch (err) {
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = email;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-9999px';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          showToast();
+        }
+      });
+    });
+  }
+
+  function showToast() {
+    if (!toast) return;
+
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(10px)';
+    }, 2000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCopyEmail);
+  } else {
+    initCopyEmail();
+  }
+
+  document.addEventListener('astro:page-load', initCopyEmail);
+})();
+</script>

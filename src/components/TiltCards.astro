@@ -1,0 +1,52 @@
+---
+// TiltCards.astro - 3D tilt effect on cards
+---
+
+<script is:inline>
+(function() {
+  const maxTilt = 8; // degrees
+  const perspective = 1000;
+
+  function initTilt() {
+    // Target cards with data-tilt attribute or common card patterns
+    const cards = document.querySelectorAll('[data-tilt], .tilt-card');
+
+    cards.forEach(card => {
+      card.style.transformStyle = 'preserve-3d';
+      card.style.transition = 'transform 0.15s ease-out';
+
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const mouseX = e.clientX - centerX;
+        const mouseY = e.clientY - centerY;
+
+        // Calculate rotation (inverted for natural feel)
+        const rotateY = (mouseX / (rect.width / 2)) * maxTilt;
+        const rotateX = -(mouseY / (rect.height / 2)) * maxTilt;
+
+        this.style.transform = 'perspective(' + perspective + 'px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'perspective(' + perspective + 'px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        this.style.transition = 'transform 0.4s ease-out';
+      });
+
+      card.addEventListener('mouseenter', function() {
+        this.style.transition = 'transform 0.15s ease-out';
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTilt);
+  } else {
+    initTilt();
+  }
+
+  document.addEventListener('astro:page-load', initTilt);
+})();
+</script>
