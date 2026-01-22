@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
 import Logo from '../components/Logo.astro';
 import Timeline from '../components/Timeline.astro';
-import StudyActivity from '../components/StudyActivity.astro';
 
 // Only actual published work
 const publications = [
@@ -290,14 +289,8 @@ const projectThemes = ["Healthcare Tools", "Education Tech", "Automation", "Data
           </div>
         </div>
 
-        <!-- Study Activity -->
-        <div data-animate data-animate-delay="4" class="mb-12 p-8 rounded-2xl bg-gradient-to-br from-grayblue-900/50 to-grayblue-800/30 border border-grayblue-700/30">
-          <h3 class="text-lg font-semibold text-grayblue-100 mb-6">Activity</h3>
-          <StudyActivity weeks={26} />
-        </div>
-
         <!-- Interests Bar -->
-        <div data-animate data-animate-delay="5" class="p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+        <div data-animate data-animate-delay="4" class="p-6 rounded-xl bg-white/[0.02] border border-white/[0.05]">
           <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Areas of Interest</h3>
           <div class="flex flex-wrap gap-3">
             {["Surgery", "Health Economics", "AI in Healthcare", "Cost-Effectiveness Analysis", "Clinical Decision Support"].map((interest) => (
