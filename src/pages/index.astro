@@ -1,25 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ParticleBackground from '../components/ParticleBackground.astro';
-import Logo from '../components/Logo.astro';
-import Timeline from '../components/Timeline.astro';
 import Footer from '../components/Footer.astro';
 
-// Publications by category
 const papers = [
   {
     title: "An Early Pipeline Framework for Assessing Vendor AI Solutions to Support Return on Investment",
     venue: "npj Digital Medicine",
+    year: "2025",
     url: "https://pubmed.ncbi.nlm.nih.gov/40523928/",
   },
   {
-    title: "β Cell Gαs Signaling is Critical for Physiological and Pharmacological Enhancement of Insulin Secretion",
+    title: "\u03B2 Cell G\u03B1s Signaling is Critical for Physiological and Pharmacological Enhancement of Insulin Secretion",
     venue: "Journal of Clinical Investigation",
+    year: "2025",
     url: "https://pubmed.ncbi.nlm.nih.gov/40526441/",
   },
   {
     title: "Glucagon Promotes Net Hepatic Glycogen Repletion Following Meal Ingestion",
     venue: "Diabetes",
+    year: "2024",
     url: null,
   },
 ];
@@ -54,90 +53,22 @@ const abstracts = [
     venue: "American Diabetes Association",
   },
 ];
-
-// Research pipeline stages with project details
-const researchPipeline = [
-  {
-    stage: "Planning",
-    count: 2,
-    color: "#486581",
-    bg: "rgba(72, 101, 129, 0.2)",
-    projects: ["Cost-Effectiveness: GLP-1 vs Bariatric Surgery", "AI Governance in Clinical Settings"]
-  },
-  {
-    stage: "In Progress",
-    count: 3,
-    color: "#627d98",
-    bg: "rgba(98, 125, 152, 0.2)",
-    projects: ["ML for Surgical Outcome Prediction", "Health Economics Methods Review", "Clinical Decision Support Validation"]
-  },
-  {
-    stage: "Under Review",
-    count: 1,
-    color: "#829ab1",
-    bg: "rgba(130, 154, 177, 0.2)",
-    projects: ["Vendor AI Assessment Framework"]
-  },
-  {
-    stage: "Published",
-    count: 3,
-    color: "#9fb3c8",
-    bg: "rgba(159, 179, 200, 0.2)",
-    projects: ["NPJ Digital Medicine Paper", "Diabetes Journal Paper", "JCI Paper"]
-  },
-];
-
-// Project pipeline stages with project details
-const projectPipeline = [
-  {
-    stage: "Concept",
-    count: 2,
-    color: "#486581",
-    bg: "rgba(72, 101, 129, 0.2)",
-    projects: ["EpisodeIQ - TJA Prediction", "Study Scheduler"]
-  },
-  {
-    stage: "Building",
-    count: 3,
-    color: "#627d98",
-    bg: "rgba(98, 125, 152, 0.2)",
-    projects: ["AutoEdit", "Teamwise", "Daily Planner CLI"]
-  },
-  {
-    stage: "Live",
-    count: 2,
-    color: "#829ab1",
-    bg: "rgba(130, 154, 177, 0.2)",
-    projects: ["This Website", "Study Integration Tools"]
-  },
-];
 ---
 
 <Layout title="David Bouslov">
-  <ParticleBackground />
-
-  <!-- Skip to content (accessibility) -->
-  <a href="#about" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-grayblue-600 focus:text-white focus:rounded-lg">
-    Skip to content
-  </a>
-
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-md bg-grayblue-950/80 border-b border-white/[0.05]">
-    <div class="max-w-4xl mx-auto flex items-center justify-between">
-      <a href="#" class="text-grayblue-100 hover:text-white transition-colors" aria-label="Home">
-        <Logo size={36} />
+    <div class="max-w-3xl mx-auto flex items-center justify-between">
+      <a href="#" class="text-grayblue-100 hover:text-white transition-colors font-semibold tracking-tight">
+        DB
       </a>
 
       <!-- Desktop Nav -->
       <div class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#about" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">About</a>
-        <a href="#work" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Work</a>
+        <a href="#education" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Education</a>
+        <a href="#research" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Research</a>
         <a href="#publications" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Publications</a>
-        <a href="/now" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Now</a>
-        <a href="/uses" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Uses</a>
-        <button id="cmd-k-hint" class="text-grayblue-500 hover:text-grayblue-300 transition-colors text-xs flex items-center gap-1 px-2 py-1 rounded border border-grayblue-700/50 hover:border-grayblue-600/50">
-          <kbd class="font-mono">⌘K</kbd>
-        </button>
+        <a href="#contact" class="text-grayblue-400 hover:text-grayblue-100 transition-colors">Contact</a>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -151,340 +82,118 @@ const projectPipeline = [
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="md:hidden hidden absolute top-full left-0 right-0 bg-grayblue-950/95 backdrop-blur-md border-b border-white/[0.05] px-6 py-4">
       <div class="flex flex-col gap-4">
-        <a href="#about" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">About</a>
-        <a href="#work" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Work</a>
+        <a href="#education" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Education</a>
+        <a href="#research" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Research</a>
         <a href="#publications" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Publications</a>
-        <a href="/now" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Now</a>
-        <a href="/uses" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Uses</a>
+        <a href="#contact" class="text-grayblue-300 hover:text-grayblue-100 transition-colors py-2">Contact</a>
       </div>
     </div>
   </nav>
 
   <main class="relative z-10">
     <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 relative">
-      <div class="max-w-4xl mx-auto text-center">
-        <!-- Subtle gradient glow behind name -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30">
-          <div class="w-96 h-96 bg-grayblue-600/20 rounded-full blur-3xl"></div>
-        </div>
-
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight relative">
-          <span class="text-grayblue-100">David</span>
-          <span class="text-grayblue-500"> Bouslov</span>
+    <section class="pt-32 pb-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">
+          <span class="text-grayblue-100">David Bouslov</span>
         </h1>
 
-        <p class="mt-6 text-xl md:text-2xl text-grayblue-400 font-light">
-          Medical Student <span class="text-grayblue-600">·</span> Researcher <span class="text-grayblue-600">·</span> Builder
+        <p class="mt-4 text-lg text-grayblue-400">
+          M.D. Candidate <span class="text-grayblue-600">&middot;</span> Class of 2027
         </p>
 
-        <p class="mt-4 text-grayblue-500 max-w-lg mx-auto leading-relaxed">
-          Building at the intersection of medicine, AI, and health economics.
+        <p class="mt-3 text-grayblue-500 max-w-xl leading-relaxed">
+          Medical student at Hackensack Meridian School of Medicine with research interests
+          in health economics, artificial intelligence in healthcare, and surgical outcomes.
         </p>
+      </div>
+    </section>
 
-        <div class="mt-10 flex items-center justify-center gap-4">
-          <a
-            href="#work"
-            class="group px-6 py-3 bg-grayblue-600 hover:bg-grayblue-500 text-white rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:shadow-grayblue-600/20"
-            data-magnetic
-          >
-            <span class="flex items-center gap-2">
-              View Work
-              <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </span>
-          </a>
-          <a
-            href="https://github.com/dbouslov"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="px-6 py-3 border border-grayblue-600 hover:border-grayblue-400 text-grayblue-300 hover:text-grayblue-100 rounded-lg font-medium transition-all duration-200 hover:bg-white/[0.02]"
-            data-magnetic
-          >
-            GitHub
-          </a>
-        </div>
+    <!-- Education Section -->
+    <section id="education" class="py-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 data-animate class="text-2xl font-bold text-grayblue-100 mb-8">Education</h2>
 
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div class="flex flex-col items-center gap-2 text-grayblue-600">
-            <span class="text-xs uppercase tracking-widest">Scroll</span>
-            <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+        <div class="space-y-6">
+          <div data-animate data-animate-delay="1" class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+              <div>
+                <h3 class="text-grayblue-100 font-semibold">Hackensack Meridian School of Medicine</h3>
+                <p class="text-sm text-grayblue-400">Doctor of Medicine</p>
+              </div>
+              <span class="text-sm text-grayblue-500 sm:text-right shrink-0">2023 &ndash; 2027</span>
+            </div>
+          </div>
+
+          <div data-animate data-animate-delay="2" class="p-5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+              <div>
+                <h3 class="text-grayblue-100 font-semibold">University of North Carolina at Chapel Hill</h3>
+                <p class="text-sm text-grayblue-400">B.S. Biology, Chemistry Minor</p>
+                <p class="text-sm text-grayblue-500">Phi Beta Kappa</p>
+              </div>
+              <span class="text-sm text-grayblue-500 sm:text-right shrink-0">2019 &ndash; 2023</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 px-6">
-      <div class="max-w-4xl mx-auto">
-        <h2 data-animate class="text-3xl font-bold text-grayblue-100 mb-8">About</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div data-animate data-animate-delay="1" class="space-y-4 text-grayblue-300 leading-relaxed">
-            <p>
-              I'm a second-year medical student at Hackensack Meridian School of Medicine
-              interested in surgery and leveraging technology to improve healthcare.
-            </p>
-            <p>
-              I build tools that solve problems I encounter in medical education and research—from
-              study optimization systems to cost-effectiveness analysis frameworks.
-            </p>
+    <!-- Research Section -->
+    <section id="research" class="py-16 px-6 bg-white/[0.01]">
+      <div class="max-w-3xl mx-auto">
+        <h2 data-animate class="text-2xl font-bold text-grayblue-100 mb-8">Research Interests</h2>
+
+        <div data-animate data-animate-delay="1" class="grid sm:grid-cols-2 gap-4">
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <h3 class="text-grayblue-200 font-medium mb-1">Health Economics</h3>
+            <p class="text-sm text-grayblue-400">Cost-effectiveness analysis, Markov modeling, economic evaluation of surgical and pharmacological interventions</p>
           </div>
-          <div data-animate data-animate-delay="2" class="space-y-4">
-            <div class="p-4 rounded-lg bg-white/[0.03] border border-white/[0.06]" data-tilt>
-              <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-3">Education</h3>
-              <div class="space-y-2">
-                <p class="text-grayblue-200">Hackensack Meridian School of Medicine</p>
-                <p class="text-sm text-grayblue-500">M.D. Candidate, Class of 2027</p>
-              </div>
-              <div class="mt-4 space-y-2">
-                <p class="text-grayblue-200">University of North Carolina at Chapel Hill</p>
-                <p class="text-sm text-grayblue-500">B.S. Biology, Chemistry Minor · Phi Beta Kappa</p>
-              </div>
-            </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <h3 class="text-grayblue-200 font-medium mb-1">AI in Healthcare</h3>
+            <p class="text-sm text-grayblue-400">Clinical AI governance, vendor assessment frameworks, responsible implementation of AI in hospital systems</p>
           </div>
-        </div>
-
-        <!-- Timeline -->
-        <div data-animate data-animate-delay="3" class="mt-12">
-          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-6">Journey</h3>
-          <Timeline />
-        </div>
-      </div>
-    </section>
-
-    <!-- Work Section - Pipeline Visualization -->
-    <section id="work" class="py-24 px-6 bg-white/[0.01]">
-      <div class="max-w-4xl mx-auto">
-        <h2 data-animate class="text-3xl font-bold text-grayblue-100 mb-4">Work</h2>
-        <p data-animate data-animate-delay="1" class="text-grayblue-400 mb-12">Current pipeline across research and development</p>
-
-        <!-- Research Pipeline -->
-        <div data-animate data-animate-delay="2" class="mb-16">
-          <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Research</h3>
-
-          <!-- Desktop: Horizontal Pipeline -->
-          <div class="hidden md:block">
-            <div class="relative flex items-center justify-between max-w-3xl mx-auto">
-              <!-- Pipeline tube -->
-              <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
-              <!-- Flow arrows -->
-              <div class="absolute top-8 left-8 right-8 flex items-center justify-between pointer-events-none" style="transform: translateY(-50%);">
-                {[1, 2, 3].map((_, i) => (
-                  <svg class="w-3 h-3 text-grayblue-500 opacity-60" style={`margin-left: ${22 + i * 2}%;`} fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                  </svg>
-                ))}
-              </div>
-
-              <!-- Nodes -->
-              {researchPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
-                  <div class="relative cursor-pointer">
-                    <div
-                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-                </div>
-              ))}
-            </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <h3 class="text-grayblue-200 font-medium mb-1">Surgical Outcomes</h3>
+            <p class="text-sm text-grayblue-400">Predictive modeling for surgical outcomes, quality improvement, NSQIP-based research</p>
           </div>
-
-          <!-- Mobile: Vertical Pipeline -->
-          <div class="md:hidden relative pl-8">
-            <!-- Vertical tube -->
-            <div class="absolute left-[31px] top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
-
-            <div class="space-y-6">
-              {researchPipeline.map((item, index) => (
-                <div class="flex items-center gap-4 relative group" style={`z-index: ${10 - index};`}>
-                  <!-- Node -->
-                  <div class="relative cursor-pointer flex-shrink-0">
-                    <div
-                      class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-active:opacity-0 group-active:scale-110 bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <span class="text-xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-                    <!-- Expanded (tap on mobile) -->
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-active:opacity-100 group-active:scale-100 transition-all duration-300 ease-out shadow-xl bg-grayblue-950 z-20"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- Label inline -->
-                  <div>
-                    <span class="text-sm text-grayblue-200 font-medium">{item.stage}</span>
-                    <p class="text-xs text-grayblue-500">{item.count} {item.count === 1 ? 'project' : 'projects'}</p>
-                  </div>
-                  <!-- Down arrow (except last) -->
-                  {index < researchPipeline.length - 1 && (
-                    <svg class="absolute left-[26px] -bottom-5 w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <!-- Projects Pipeline -->
-        <div data-animate data-animate-delay="3">
-          <h3 class="text-sm font-medium text-grayblue-400 uppercase tracking-wider mb-8">Projects</h3>
-
-          <!-- Desktop: Horizontal Pipeline -->
-          <div class="hidden md:block">
-            <div class="relative flex items-center justify-between max-w-xl mx-auto">
-              <!-- Pipeline tube -->
-              <div class="absolute top-8 left-8 right-8 h-1 rounded-full bg-gradient-to-r from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
-              <!-- Flow arrows -->
-              <div class="absolute top-8 left-8 right-8 flex items-center justify-around pointer-events-none" style="transform: translateY(-50%);">
-                {[1, 2].map(() => (
-                  <svg class="w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                  </svg>
-                ))}
-              </div>
-
-              <!-- Nodes -->
-              {projectPipeline.map((item, index) => (
-                <div class="flex flex-col items-center relative group z-10" style={`z-index: ${10 - index};`}>
-                  <div class="relative cursor-pointer">
-                    <div
-                      class="w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-110 bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <span class="text-2xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-300 ease-out shadow-xl bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <span class="mt-3 text-xs text-grayblue-400 font-medium transition-opacity duration-300 group-hover:opacity-0">{item.stage}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <!-- Mobile: Vertical Pipeline -->
-          <div class="md:hidden relative pl-8">
-            <!-- Vertical tube -->
-            <div class="absolute left-[31px] top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-grayblue-700 via-grayblue-600 to-grayblue-500"></div>
-
-            <div class="space-y-6">
-              {projectPipeline.map((item, index) => (
-                <div class="flex items-center gap-4 relative group" style={`z-index: ${10 - index};`}>
-                  <!-- Node -->
-                  <div class="relative cursor-pointer flex-shrink-0">
-                    <div
-                      class="w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-300 ease-out group-active:opacity-0 group-active:scale-110 bg-grayblue-950"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <span class="text-xl font-bold" style={`color: ${item.color};`}>{item.count}</span>
-                    </div>
-                    <!-- Expanded (tap on mobile) -->
-                    <div
-                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 py-4 px-4 rounded-2xl border-2 opacity-0 scale-50 pointer-events-none group-active:opacity-100 group-active:scale-100 transition-all duration-300 ease-out shadow-xl bg-grayblue-950 z-20"
-                      style={`border-color: ${item.color};`}
-                    >
-                      <p class="text-xs font-semibold uppercase tracking-wider mb-2 text-center" style={`color: ${item.color};`}>{item.stage}</p>
-                      <ul class="space-y-1.5">
-                        {item.projects.map((project) => (
-                          <li class="text-xs text-grayblue-100 flex items-start gap-1.5">
-                            <span style={`color: ${item.color};`} class="mt-0.5">•</span>
-                            <span>{project}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- Label inline -->
-                  <div>
-                    <span class="text-sm text-grayblue-200 font-medium">{item.stage}</span>
-                    <p class="text-xs text-grayblue-500">{item.count} {item.count === 1 ? 'project' : 'projects'}</p>
-                  </div>
-                  <!-- Down arrow (except last) -->
-                  {index < projectPipeline.length - 1 && (
-                    <svg class="absolute left-[26px] -bottom-5 w-3 h-3 text-grayblue-500 opacity-60" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
-                  )}
-                </div>
-              ))}
-            </div>
+          <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <h3 class="text-grayblue-200 font-medium mb-1">Endocrine Physiology</h3>
+            <p class="text-sm text-grayblue-400">Glucagon signaling, hepatic glycogen metabolism, beta cell physiology and insulin secretion</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Publications Section -->
-    <section id="publications" class="py-24 px-6">
-      <div class="max-w-4xl mx-auto">
-        <h2 data-animate class="text-3xl font-bold text-grayblue-100 mb-12">Publications</h2>
+    <section id="publications" class="py-16 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 data-animate class="text-2xl font-bold text-grayblue-100 mb-8">Publications</h2>
 
         <!-- Papers -->
         <div data-animate data-animate-delay="1" class="mb-10">
-          <h3 class="text-lg font-semibold text-grayblue-200 mb-4">Papers</h3>
+          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Peer-Reviewed Papers</h3>
           <div class="space-y-3">
             {papers.map((pub) => (
               pub.url ? (
-                <a href={pub.url} target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] hover:border-grayblue-600/40 transition-all duration-300 group" data-tilt>
+                <a href={pub.url} target="_blank" rel="noopener noreferrer" class="block p-4 rounded-lg bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-grayblue-600/40 transition-all group">
                   <h4 class="text-sm font-medium text-grayblue-100 leading-relaxed group-hover:text-white transition-colors">{pub.title}</h4>
-                  <p class="mt-1 text-xs text-grayblue-400 flex items-center gap-2">
-                    <span class="text-grayblue-300">{pub.venue}</span>
-                    <svg class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <p class="mt-1.5 text-xs text-grayblue-400 flex items-center gap-2">
+                    <span class="italic text-grayblue-300">{pub.venue}</span>
+                    <span class="text-grayblue-600">&middot;</span>
+                    <span>{pub.year}</span>
+                    <svg class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                     </svg>
                   </p>
                 </a>
               ) : (
-                <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300" data-tilt>
+                <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
                   <h4 class="text-sm font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
-                  <p class="mt-1 text-xs text-grayblue-400">
-                    <span class="text-grayblue-300">{pub.venue}</span>
+                  <p class="mt-1.5 text-xs text-grayblue-400">
+                    <span class="italic text-grayblue-300">{pub.venue}</span>
+                    <span class="text-grayblue-600"> &middot; </span>
+                    <span>{pub.year}</span>
                   </p>
                 </div>
               )
@@ -494,13 +203,13 @@ const projectPipeline = [
 
         <!-- Textbook Chapters -->
         <div data-animate data-animate-delay="2" class="mb-10">
-          <h3 class="text-lg font-semibold text-grayblue-200 mb-4">Textbook Chapters</h3>
+          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Textbook Chapters</h3>
           <div class="space-y-3">
             {textbookChapters.map((pub) => (
-              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300" data-tilt>
+              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
                 <h4 class="text-sm font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
-                <p class="mt-1 text-xs text-grayblue-400">
-                  <span class="text-grayblue-300">{pub.venue}</span>
+                <p class="mt-1.5 text-xs text-grayblue-400">
+                  <span class="italic text-grayblue-300">{pub.venue}</span>
                 </p>
               </div>
             ))}
@@ -509,13 +218,13 @@ const projectPipeline = [
 
         <!-- Abstracts -->
         <div data-animate data-animate-delay="3">
-          <h3 class="text-lg font-semibold text-grayblue-200 mb-4">Abstracts</h3>
+          <h3 class="text-sm font-semibold text-grayblue-400 uppercase tracking-wider mb-4">Abstracts &amp; Presentations</h3>
           <div class="space-y-3">
             {abstracts.map((pub) => (
-              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-all duration-300" data-tilt>
+              <div class="p-4 rounded-lg bg-white/[0.02] border border-white/[0.06]">
                 <h4 class="text-sm font-medium text-grayblue-100 leading-relaxed">{pub.title}</h4>
-                <p class="mt-1 text-xs text-grayblue-400">
-                  <span class="text-grayblue-300">{pub.venue}</span>
+                <p class="mt-1.5 text-xs text-grayblue-400">
+                  <span class="italic text-grayblue-300">{pub.venue}</span>
                 </p>
               </div>
             ))}
@@ -527,4 +236,3 @@ const projectPipeline = [
     <Footer />
   </main>
 </Layout>
-
